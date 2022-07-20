@@ -28,4 +28,10 @@ task("balance", "Prints the account balance")
     console.log(hre.ethers.utils.formatEther(balance), "ETH");
   })
 
+task("blockNumber", "Prints the most recent block number")
+  .setAction(async (taskArgs, hre) => {
+    const blockNumber = await hre.ethers.provider.getBlockNumber();
+    console.log(blockNumber);
+  })
+
 export default config;
