@@ -10,7 +10,7 @@ export const forkFrom = async (blockNumber: number) => {
     }
 
     await hre.network.provider.request({
-        method: "hardhat_request",
+        method: "hardhat_reset",
         params: [
             {
                 forking: {
