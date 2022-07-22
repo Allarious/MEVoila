@@ -20,7 +20,8 @@ describe("getBlockTransactions", function () {
             const transactions = await getBlockTransactions(data.blockHeight);
 
             expect(transactions).to.eql(
-                    data.transactions 
+                    data.transactions,
+                    `fetched transactions of block ${data.blockHeight} are not the same as stored data`
                     );
         })
         
@@ -33,7 +34,10 @@ describe("getBlockTransactions", function () {
                 futureBlock
                 );
 
-            expect(futureBlockData).to.be.undefined;
+            expect(
+                futureBlockData,
+                "transactions of a future block should be undefined"
+                ).to.be.undefined;
         })
     })
 });
