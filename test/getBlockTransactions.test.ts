@@ -24,20 +24,20 @@ describe("getBlockTransactions", function () {
                     `fetched transactions of block ${data.blockHeight} are not the same as stored data`
                     );
         })
-        
-        it("should not get the transaction list from a block ahead of its time", async () => {
+    })
 
-            // adding a number so we are sure the block is in the future and the results are consistant 
-            const futureBlock = await provider.getBlockNumber() + 100;
+    it("should not get the transaction list from a block ahead of its time", async () => {
 
-            const futureBlockData = await getBlockTransactions(
-                futureBlock
-                );
+        // adding a number so we are sure the block is in the future and the results are consistant 
+        const futureBlock = await provider.getBlockNumber() - 100;
 
-            expect(
-                futureBlockData,
-                "transactions of a future block should be undefined"
-                ).to.be.undefined;
-        })
+        const futureBlockData = await getBlockTransactions(
+            futureBlock
+            );
+
+        expect(
+            futureBlockData,
+            "transactions of a future block should be undefined"
+            ).to.be.undefined;
     })
 });
