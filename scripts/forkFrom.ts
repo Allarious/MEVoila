@@ -15,7 +15,7 @@ export const forkFrom = async (blockNumber: number) => {
             {
                 forking: {
                     jsonRpcUrl: hre.config.networks.hardhat.forking.url,
-                    blockNumber: blockNumber,
+                    blockNumber: (blockNumber === 0 ? undefined : blockNumber),
                 },
             },
         ],
