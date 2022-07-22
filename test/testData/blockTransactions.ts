@@ -39,4 +39,4 @@ export const blockTransactions = [
             '0xec2355cabdd56a086440862c05376e5ec1db6678edfa2607c31b2f6e4f83265a'
         ]
     }
-]
+];

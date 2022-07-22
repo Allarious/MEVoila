@@ -5,7 +5,7 @@ import { accountBalance } from './testData/accountBalance';
 
 describe("forkFrom", function () {
     const { BigNumber, provider} = ethers;
-    const testData = accountBalance
+    const testData = accountBalance;
 
     testData.forEach((data) => {
         it(`Should form a block ${data.blockHeight} and report ${data.name} balance right`, async () => {
@@ -22,5 +22,5 @@ describe("forkFrom", function () {
                     )
                 );
         }) 
-    })
-})
+    });
+});

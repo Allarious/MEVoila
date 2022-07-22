@@ -11,4 +11,4 @@ export const accountBalance = [
         account: "0x1aD91ee08f21bE3dE0BA2ba6918E714dA6B45836",
         balance: "17306757562173843129636",
     }
-]
+];

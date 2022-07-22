@@ -1,21 +1,21 @@
 import { ethers } from 'hardhat';
 
 export const getBlockTransactions = async (blockNumber: number) => {
-    const { provider } = ethers
+    const { provider } = ethers;
 
     try {
 
-        const blockData = await provider.getBlock(blockNumber)
-        return blockData.transactions
+        const blockData = await provider.getBlock(blockNumber);
+        return blockData.transactions;
 
     } catch (e: unknown) {
 
         if (typeof e === "string") {
-            e.toUpperCase()
+            e.toUpperCase();
         } else if (e instanceof Error) {
-            e.message
+            e.message;
         } else {
-            console.log(e)
+            console.log(e);
         }
     }
 }
