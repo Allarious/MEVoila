@@ -8,13 +8,12 @@ describe("getBlockTransactions", function () {
 
     const { provider } = ethers;
 
-    blockTransactions.forEach((data) => {
-        
-        this.beforeAll(async () => {
-            // Reset the head to the latest block
-            await forkFrom(0);
-        })
+    this.beforeAll(async () => {
+        // Reset the head to the latest block
+        await forkFrom(0);
+    })
 
+    blockTransactions.forEach((data) => {
         it(`should get the transaction list from block ${data.blockHeight} correctly`, async () => {
 
             const transactions = await getBlockTransactions(data.blockHeight);
