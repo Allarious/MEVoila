@@ -6,6 +6,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.9",
   networks: {
     hardhat: {
+      chainId: 1,
       mining: {
         mempool: {
           order: "fifo"
