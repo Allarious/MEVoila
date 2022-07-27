@@ -7,9 +7,9 @@ export const getTransactionByHash = async (txHash: string) => {
 
     try{
 
-        const txData = await provider.send("eth_getTransactionByHash", [txHash])
+        const txData = await provider.send("eth_getTransactionByHash", [txHash]);
 
-        return txData
+        return txData;
 
     } catch (e: unknown) {
 

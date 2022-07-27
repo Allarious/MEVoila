@@ -22,5 +22,7 @@ const etherJsTransactionWrapper = (txObject: any) => {
     txObject.gasLimit = txObject.gas
     txObject.gas = undefined
 
+    txObject.data = txObject.input
+
     return txObject
 }
