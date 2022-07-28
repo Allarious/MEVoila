@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
-import { getRawTransactionByHash } from '../scripts/getRawTransaction';
+import { getRawTransactionByHash } from '../scripts/getRawTransactionByHash';
 import { transactionSerializationData } from './testData/transactionSerializationData';
 import { forkFrom } from '../scripts/forkFrom';
 
@@ -22,3 +22,6 @@ describe('getRawTransaction', function () {
     )
 
 })
+
+//TODO add more tests and test serialize and getTransactionByHash independently
+//TODO Add a test to check the latest block too
