@@ -6,6 +6,7 @@ export const sendSingleTransaction = async (txObject: any) => {
 
     //To include all sent transaction in a single block
     //TODO check and see if this mines all already pending transactions?
+    //TODO get the setAutomine before and set it afterwards
     await network.provider.send("evm_setAutomine", [true]);
 
     let txRaw;
@@ -20,6 +21,6 @@ export const sendSingleTransaction = async (txObject: any) => {
             "eth_sendRawTransaction",
             [txRaw]
         );
-        
+
     return output
 }
