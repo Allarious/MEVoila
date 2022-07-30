@@ -1,9 +1,12 @@
 import { getTransactionByHash } from './getTransactionByHash';
 import { serialize } from './serialize';
 
-export const getRawTransactionByHash = async (txHash: string) => {
+export const getRawTransactionByHash = async (txHash: string, verbose = true) => {
 
     const txObject = await getTransactionByHash(txHash);
+    if(verbose){
+        console.log(`getting raw transction of object ${txObject.hash}`);
+    }
     const txRaw = serialize(txObject);
 
     return txRaw;
