@@ -9,7 +9,6 @@ export const getBlockRawTransactions = async (blockNumber: number) => {
     }
 
     let txRaws = [];
-    let counter = 0
 
     for(let txHash of txHashes){
         txRaws.push(await getRawTransactionByHash(txHash))
