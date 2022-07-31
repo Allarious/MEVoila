@@ -7,6 +7,9 @@ export const getBlockRawTransactions = async (blockNumber: number) => {
     if(txHashes === undefined){
         return undefined;
     }
+    if(txHashes.length === 0){
+        return []
+    }
 
     let txRaws = [];
 
