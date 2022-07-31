@@ -10,24 +10,26 @@ describe("Fetching and mining a block", function (){
     const { provider } = ethers;
 
     it("should fetch replay a block", async () => {
-        const blockNumber = await provider.getBlockNumber(); 
-        // const blockNumber = 15246326;
+        // Going back 50 blocks to make sure the block is not a minor fork is submitted to the system
+        const blockNumber = await provider.getBlockNumber() - 50; 
         const txRaws = await getBlockRawTransactions(blockNumber);
-        console.log(txRaws?.length)
+
+        console.log(`the block ${blockNumber}'s transaction count is equal to ${txRaws?.length}`);
 
         forkFrom(blockNumber - 1);
-        console.log(`Forked from blocknumber: ${blockNumber - 1}`)
 
-        if(txRaws === undefined){
-            console.log("EMPTY BLOCK, STOPPING.")
+        console.log(`Forked from blocknumber: ${blockNumber - 1}`);
+
+        if(txRaws === undefined || txRaws.length === 0){
+            console.log("EMPTY BLOCK, STOPPING.");
             console.log(`block ${blockNumber} was empty.`);
         } else {
-            console.log("sending the transactions")
+            console.log("Sending the transactions:")
+            
             await sendRawTransactions(txRaws, false);
-            console.log(1)
+
             const newBlockNumber = await provider.getBlockNumber();
-            console.log(1)
-            console.log(newBlockNumber)
+
             expect(newBlockNumber).to.equal(blockNumber);
             const newRaws = await getBlockRawTransactions(newBlockNumber);
             expect(newRaws).to.eql(txRaws);

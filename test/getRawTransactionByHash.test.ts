@@ -1,12 +1,9 @@
 import { expect } from 'chai';
-import { ethers } from 'hardhat';
 import { getRawTransactionByHash } from '../scripts/getRawTransactionByHash';
 import { transactionSerializationData } from './testData/transactionSerializationData';
 import { forkFrom } from '../scripts/forkFrom';
 
 describe('getRawTransaction', function () {
-
-    const { provider } = ethers;
 
     this.beforeAll(async () => {
         await forkFrom(0);
