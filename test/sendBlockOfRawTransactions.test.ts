@@ -3,37 +3,40 @@ import { ethers } from 'hardhat';
 import { forkFrom } from '../scripts/forkFrom';
 import { sendRawTransactions } from '../scripts/sendRawTransactions';
 import { getBlockRawTransactions } from '../scripts/getBlockRawTransactions';
+import { getBlockTxStatus } from '../scripts/getBlockTxStatus';
 
 
-//Integration test
+//This is supposed to be a big Integration test over a couple components
 describe("Fetching and mining a block", function (){
     const { provider } = ethers;
 
     it("should fetch replay a block", async () => {
         // Going back 50 blocks to make sure the block is not a minor fork is submitted to the system
-        const blockNumber = await provider.getBlockNumber() - 50; 
+        const blockNumber = await provider.getBlockNumber() - 50;
         const txRaws = await getBlockRawTransactions(blockNumber);
+        const txStatus = await getBlockTxStatus(blockNumber);
 
         console.log(`the block ${blockNumber}'s transaction count is equal to ${txRaws?.length}`);
 
         forkFrom(blockNumber - 1);
 
         console.log(`Forked from blocknumber: ${blockNumber - 1}`);
-
+        
         if(txRaws === undefined || txRaws.length === 0){
             console.log("EMPTY BLOCK, STOPPING.");
             console.log(`block ${blockNumber} was empty.`);
         } else {
-            console.log("Sending the transactions:")
-            
+            console.log("Sending the transactions:");
+
             await sendRawTransactions(txRaws, false);
 
             const newBlockNumber = await provider.getBlockNumber();
+            const newBlockTxStatus = await getBlockTxStatus(newBlockNumber);
+            const newRaws = await getBlockRawTransactions(newBlockNumber);
 
             expect(newBlockNumber).to.equal(blockNumber);
-            const newRaws = await getBlockRawTransactions(newBlockNumber);
+            expect(newBlockTxStatus).to.eql(txStatus);
             expect(newRaws).to.eql(txRaws);
-            
         }
     })
 })
