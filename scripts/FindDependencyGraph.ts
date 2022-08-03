@@ -70,7 +70,9 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
         failedTx.data = failedTx.input
     }
 
+    if(verbose){
     console.log(failedTxObjects)
+    }
     let hash = new Map();
 
     // txRaws = txRaws.slice(4, txRaws.length)
@@ -114,7 +116,9 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
         for(let failedTx of failedTxObjects){
             try{
                 const out = await provider.send("eth_call", [failedTx]);
-                console.log(out);
+                if(verbose){
+                    console.log(out);
+                }
                 newFailed.push(failedTx)
             } catch {
                 data.push([failedTx.hash, index])
@@ -135,6 +139,7 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
         throw Error("Failed transactions are still in queue, something bad happened!");
     }
     console.log(hash);
+    return hash
 }
 
 //FIRST BLOCK
@@ -146,7 +151,7 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
 // findDependencyGraphInABlock(15271751);
 // 0x4a93fc031ebeab0b2c444f28d0944699dbf4133f2f306f69ee5030cc725ffa07' => '0x7a43b560257da942ca683924a036045847f1ec8e76fae3b3ab65f06997899a4e'
 
-findDependencyGraphInABlock(15271830);
+// findDependencyGraphInABlock(15271830);
 // '0xc87921f523f04630f2d5be146a31eabe567e8cded561afd0232af61973f06fe8' => '0x6355d48162fd9b17a172de8e915a2709d8ed152a3d5b595678504343735f5126',
 // '0x0ac7cf038c56e2871519a97b36d2ea1ecb0ddd168dc076cff78775985c71d958' => '0x07192f2ec1047c7bc377035e3059e1d3bce6f9b00cc80860ee5940ddd8236fd8'
 
