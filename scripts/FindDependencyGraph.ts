@@ -10,8 +10,6 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
 
     const { provider } = ethers;
 
-    await network.provider.send("evm_setAutomine", [false]);
-
     const setupBlockInitialState = async () => {
         if(verbose){
             console.log(`Forking from block ${blockNumber - 1}`);
@@ -66,31 +64,42 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
         }
     }
 
-    // console.log(failedTxObjects)
+    console.log(failedTxObjects)
     let hash = new Map();
 
     // txRaws = txRaws.slice(4, txRaws.length)
+
     for(let index = 0; index < txRaws.length; index++){
         //maintain a list of failed transaction that run at a certain index, index == 0 then we have irrational transactions for now
         if(verbose){
-            console.log(`rebuilding last block's state, Block ${blockNumber - 1}.`)
+            console.log(`Rebuilding last block's state, Block ${blockNumber - 1}.`)
         }
         await loadFixture(setupBlockInitialState);
         if(verbose){
             console.log(`Running first ${index} transactions.`)
         }
+
+        // This shouldnt be needed evertime, forkfrom has some problems that needs fixing.
+        await network.provider.send("evm_setAutomine", [false]);
+
         for(let i = 0; i < index; i++){
             const output = await provider.send(
                 "eth_sendRawTransaction",
                 [txRaws[i]]
             );
+            // if(verbose){
+            //     console.log(`Transaction with index ${i + 1}, and hash ${output} is now in mempool.`);
+            // }
         }
 
         if(verbose){
             console.log("Mining pending transactions.");
         }
+
         await network.provider.send("hardhat_mine", ["0x1"]);
+
         if(verbose){
+            console.log(await provider.getBlockNumber());
             console.log("Mining Finished.");
         }
         // call the faied txs until they fail
@@ -107,7 +116,11 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
                 console.log(out);
                 newFailed.push(failedTx)
             } catch {
-                hash.set(failedTx.hash, index)
+                if(index === 0){
+                    hash.set(failedTx.hash, 0);
+                } else {
+                    hash.set(failedTx.hash, txHashes[index - 1]);
+                }
             }
         }
         failedTxObjects = newFailed;
@@ -115,6 +128,8 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
             break
         }
     }
+
+    console.log(hash);
 
 }
 

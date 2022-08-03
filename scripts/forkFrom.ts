@@ -1,4 +1,4 @@
-import hre from 'hardhat';
+import hre, { network } from 'hardhat';
 
 
 // Thanks to cmichel https://cmichel.io/replaying-ethereum-hacks-introduction/
@@ -9,6 +9,8 @@ export const forkFrom = async (blockNumber: number) => {
             `Forking misconfigured for "hardhat" network in hardhat.config.ts`
         );
     }
+
+    //TODO, this should not mutate data, should not remove other configurations
 
     await hre.network.provider.request({
         method: "hardhat_reset",
