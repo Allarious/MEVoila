@@ -17,13 +17,30 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
             console.log(`Forking from block ${blockNumber - 1}`);
         }
         await forkFrom(blockNumber - 1);
+        if(verbose){
+            console.log("Forking is finished.")
+        }
     }
 
+    if(verbose){
+        console.log(`Getting Block ${blockNumber}'s raw transactions.`)
+    }
     let txRaws = await getBlockRawTransactions(blockNumber);
+    if(verbose){
+        console.log(`Received Raw transactions DONE.`)
+        console.log(`Getting Block ${blockNumber}'s transaction's hashes.`)
+    }
     const txHashes = await getBlockTransactions(blockNumber);
+    if(verbose){
+        console.log(`Received hashes DONE.`)
+        console.log(`Getting Block ${blockNumber}'s transaction's Statuses.`)
+    }
     const txStatus = await getBlockTxStatus(blockNumber);
+    if(verbose){
+        console.log(`Received statuses DONE.`)
+        console.log("Going into transactions replay phase.")
+    }
     let failedTxObjects = []
-    // console.log(txHashes)
 
 
     if(txRaws === undefined || txStatus === undefined){
@@ -53,28 +70,38 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
     let hash = new Map();
 
     // txRaws = txRaws.slice(4, txRaws.length)
-
     for(let index = 0; index < txRaws.length; index++){
         //maintain a list of failed transaction that run at a certain index, index == 0 then we have irrational transactions for now
         if(verbose){
+            console.log(`rebuilding last block's state, Block ${blockNumber - 1}.`)
+        }
+        await loadFixture(setupBlockInitialState);
+        if(verbose){
             console.log(`Running first ${index} transactions.`)
         }
-        let stateTransaction = txRaws.slice(0, index);
-        await loadFixture(setupBlockInitialState);
-        for(let txRaw of stateTransaction){
+        for(let i = 0; i < index; i++){
             const output = await provider.send(
                 "eth_sendRawTransaction",
-                [txRaw]
+                [txRaws[i]]
             );
         }
 
+        if(verbose){
+            console.log("Mining pending transactions.");
+        }
         await network.provider.send("hardhat_mine", ["0x1"]);
+        if(verbose){
+            console.log("Mining Finished.");
+        }
         // call the faied txs until they fail
         var newFailed: any[] = [];
         for(let failedTx of failedTxObjects){
             newFailed = []
+
+            //These should go elsewhere
             failedTx.gasPrice = undefined;
             failedTx.data = failedTx.input
+
             try{
                 const out = await provider.send("eth_call", [failedTx]);
                 console.log(out);
