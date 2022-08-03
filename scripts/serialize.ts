@@ -24,6 +24,7 @@ export const serialize = (txObject: any) => {
     }
 
     const rawTransaction = "0x" + tx.serialize().toString('hex');
+    // console.log(rawTransaction)
     
     return rawTransaction;
 }

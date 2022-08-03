@@ -1,7 +1,7 @@
 import { getTransactionByHash } from './getTransactionByHash';
 import { serialize } from './serialize';
 
-export const getRawTransactionByHash = async (txHash: string, verbose = true) => {
+export const getRawTransactionByHash = async (txHash: string, verbose = false) => {
 
     const txObject = await getTransactionByHash(txHash);
     if(verbose){

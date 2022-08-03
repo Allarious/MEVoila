@@ -1,6 +1,6 @@
 import { network, ethers } from 'hardhat';
 
-export const sendRawTransactions = async (txRaws: string[], singleTransactionABlock = true,verbose = true) => {
+export const sendRawTransactions = async (txRaws: string[], singleTransactionABlock = true,verbose = false) => {
 
     const autoMine = singleTransactionABlock;
 

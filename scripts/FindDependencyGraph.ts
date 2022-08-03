@@ -23,6 +23,7 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
     const txHashes = await getBlockTransactions(blockNumber);
     const txStatus = await getBlockTxStatus(blockNumber);
     let failedTxObjects = []
+    // console.log(txHashes)
 
 
     if(txRaws === undefined || txStatus === undefined){
@@ -48,7 +49,7 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
         }
     }
 
-    console.log(failedTxObjects)
+    // console.log(failedTxObjects)
     let hash = new Map();
 
     // txRaws = txRaws.slice(4, txRaws.length)
@@ -91,4 +92,4 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
 }
 
 findDependencyGraphInABlock(15257561)
-// findDependencyGraphInABlock(15257555)
+// findDependencyGraphInABlock(15257700)
