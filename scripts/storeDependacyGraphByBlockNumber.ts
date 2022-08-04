@@ -37,9 +37,11 @@ export const FindDependancyGraphInBlockchain = async () => {
             continue;
         }
         await appendToFile(fileName, `{\n"time": ${runningTime},\n"blockNumber": ${blockNumber}, \n"numOfTransactions": ${numOfTransactions},\n"data" : [` )
+        await delay(500)
         dependancyGraph.forEach(async (value, key) => {
             await appendToFile(fileName, "{\n" + '"' + key + '"' + " : " + '"' + value + '"' + ",\n" + "},\n") ;
         })
+        await delay(500)
         await appendToFile(fileName, "]},\n")
     }
 }

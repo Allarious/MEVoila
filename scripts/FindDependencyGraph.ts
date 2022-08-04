@@ -75,8 +75,6 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
     }
     let hash = new Map();
 
-    // txRaws = txRaws.slice(4, txRaws.length)
-
     let data = []
     for(let index = 0; index < txRaws.length; index++){
         //maintain a list of failed transaction that run at a certain index, index == 0 then we have irrational transactions for now
