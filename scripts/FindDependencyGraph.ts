@@ -6,7 +6,7 @@ import { network, ethers } from "hardhat";
 import { getBlockTransactions } from "./getBlockTransactions";
 import { getTransactionByHash } from "./getTransactionByHash";
 
-export const findDependencyGraphInABlock = async (blockNumber: number, verbose = true) => {
+export const findDependencyGraphInABlock = async (blockNumber: number, verbose = false) => {
 
     const { provider } = ethers;
 
