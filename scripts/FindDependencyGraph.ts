@@ -152,6 +152,3 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
 // findDependencyGraphInABlock(15271830);
 // '0xc87921f523f04630f2d5be146a31eabe567e8cded561afd0232af61973f06fe8' => '0x6355d48162fd9b17a172de8e915a2709d8ed152a3d5b595678504343735f5126',
 // '0x0ac7cf038c56e2871519a97b36d2ea1ecb0ddd168dc076cff78775985c71d958' => '0x07192f2ec1047c7bc377035e3059e1d3bce6f9b00cc80860ee5940ddd8236fd8'
-
-
-// findDependencyGraphInABlock(15257700)
