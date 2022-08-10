@@ -134,9 +134,14 @@ export const findDependencyGraphInABlock = async (blockNumber: number, verbose =
     }
 
     if(failedTxObjects.length > 0){
-        throw Error("Failed transactions are still in queue, something bad happened!");
+        // throw Error("Failed transactions are still in queue, something bad happened!");
+        console.log("Failed transactions are still in queue, something bad happened!");
     }
-    console.log(hash);
+    if(failedTxObjects.length > 1){
+        throw Error("Failed transactions are still in queue, something bad happened!");
+        // console.log("Failed transactions are still in queue, something bad happened!");
+    }
+    // console.log(hash);
     return hash
 }
 

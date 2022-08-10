@@ -26,8 +26,14 @@ export const FindDependancyGraphInBlockchain = async () => {
 
         const fileName = "data.js";
 
-        console.log(`Finding the dependancy graph in block ${blockNumber}...`)
-        const dependancyGraph = await findDependencyGraphInABlock(blockNumber, true);
+        console.log(`Finding the dependancy graph in block ${blockNumber}...`);
+        let dependancyGraph;
+        try{
+            dependancyGraph = await findDependencyGraphInABlock(blockNumber);
+        }catch{
+            console.log(`skipping block ${blockNumber}`);
+            continue;
+        }
         console.log(`Found the dependancy graph.`)
         let end = Date.now()
         let runningTime = end - start;
@@ -58,6 +64,7 @@ function delay(ms: number) {
 
 
 FindDependancyGraphInBlockchain();
+//We should try going back a couple blocks too, since a block can be mined by a certain miner that filters transactions
 
 // '0x65b2052951db15f3354075abefab1ccd00570c88441c2fcdda557d2ef741faa0' => 0,
 // '0xbe66c976f34491732f2834bc647657fd35aaee8fcd06384417180bafb09cdd71' => 0,
