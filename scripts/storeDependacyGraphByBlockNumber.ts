@@ -24,7 +24,7 @@ export const FindDependancyGraphInBlockchain = async () => {
         const txHashes = await getBlockTransactions(blockNumber);
         const numOfTransactions = txHashes?.length;
 
-        const fileName = "data.js";
+        const fileName = "data1.js";
 
         console.log(`Finding the dependancy graph in block ${blockNumber}...`);
         let dependancyGraph;

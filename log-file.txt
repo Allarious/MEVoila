@@ -1,0 +1,758 @@
+447 blocks were processed...
+block 0
+block 1
+block 2
+block 3
+block 4
+block 5
+block 6
+block 7
+block 8
+block 9
+block 10
+block 11
+block 12
+block 13
+block 14
+block 15
+block 16
+block 17
+block 18
+block 19
+block 20
+block 21
+block 22
+block 23
+block 24
+block 25
+block 26
+block 27
+block 28
+block 29
+block 30
+block 31
+block 32
+block 33
+block 34
+block 35
+block 36
+block 37
+block 38
+block 39
+block 40
+block 41
+block 42
+block 43
+block 44
+block 45
+block 46
+block 47
+block 48
+block 49
+block 50
+block 51
+block 52
+block 53
+block 54
+block 55
+block 56
+block 57
+block 58
+block 59
+block 60
+block 61
+block 62
+block 63
+block 64
+block 65
+block 66
+block 67
+block 68
+block 69
+block 70
+block 71
+block 72
+block 73
+block 74
+block 75
+block 76
+block 77
+block 78
+block 79
+block 80
+block 81
+block 82
+block 83
+block 84
+block 85
+block 86
+block 87
+block 88
+block 89
+block 90
+block 91
+block 92
+block 93
+block 94
+block 95
+block 96
+block 97
+block 98
+block 99
+block 100
+block 101
+block 102
+block 103
+block 104
+block 105
+block 106
+block 107
+block 108
+block 109
+block 110
+block 111
+block 112
+block 113
+block 114
+block 115
+block 116
+block 117
+block 118
+block 119
+block 120
+block 121
+block 122
+block 123
+block 124
+block 125
+block 126
+block 127
+block 128
+block 129
+block 130
+block 131
+block 132
+block 133
+block 134
+block 135
+block 136
+block 137
+block 138
+block 139
+block 140
+block 141
+block 142
+block 143
+block 144
+block 145
+block 146
+block 147
+block 148
+block 149
+block 150
+block 151
+block 152
+block 153
+block 154
+block 155
+block 156
+block 157
+block 158
+block 159
+block 160
+block 161
+block 162
+block 163
+block 164
+block 165
+block 166
+block 167
+block 168
+block 169
+block 170
+block 171
+block 172
+block 173
+block 174
+block 175
+block 176
+block 177
+block 178
+block 179
+block 180
+block 181
+block 182
+block 183
+block 184
+block 185
+block 186
+block 187
+block 188
+block 189
+block 190
+block 191
+block 192
+block 193
+block 194
+block 195
+block 196
+block 197
+block 198
+block 199
+block 200
+block 201
+block 202
+block 203
+block 204
+block 205
+block 206
+block 207
+block 208
+block 209
+block 210
+block 211
+block 212
+block 213
+block 214
+block 215
+block 216
+block 217
+block 218
+block 219
+block 220
+block 221
+block 222
+block 223
+block 224
+block 225
+block 226
+block 227
+block 228
+block 229
+block 230
+block 231
+block 232
+block 233
+block 234
+block 235
+block 236
+block 237
+block 238
+block 239
+block 240
+block 241
+block 242
+block 243
+block 244
+block 245
+block 246
+block 247
+block 248
+block 249
+block 250
+block 251
+block 252
+block 253
+block 254
+block 255
+block 256
+block 257
+block 258
+block 259
+block 260
+block 261
+block 262
+block 263
+block 264
+block 265
+block 266
+block 267
+block 268
+block 269
+block 270
+block 271
+block 272
+block 273
+block 274
+block 275
+block 276
+block 277
+block 278
+block 279
+block 280
+block 281
+block 282
+block 283
+block 284
+block 285
+block 286
+block 287
+block 288
+block 289
+block 290
+block 291
+block 292
+block 293
+block 294
+block 295
+block 296
+block 297
+block 298
+block 299
+block 300
+block 301
+block 302
+block 303
+block 304
+block 305
+block 306
+block 307
+block 308
+block 309
+block 310
+block 311
+block 312
+block 313
+block 314
+block 315
+block 316
+block 317
+block 318
+block 319
+block 320
+block 321
+block 322
+block 323
+block 324
+block 325
+block 326
+block 327
+block 328
+block 329
+block 330
+block 331
+block 332
+block 333
+block 334
+block 335
+block 336
+block 337
+block 338
+block 339
+block 340
+block 341
+block 342
+block 343
+block 344
+block 345
+block 346
+block 347
+block 348
+block 349
+block 350
+block 351
+block 352
+block 353
+block 354
+block 355
+block 356
+block 357
+block 358
+block 359
+block 360
+block 361
+block 362
+block 363
+block 364
+block 365
+block 366
+block 367
+block 368
+block 369
+block 370
+block 371
+block 372
+block 373
+block 374
+block 375
+block 376
+block 377
+block 378
+block 379
+block 380
+block 381
+block 382
+block 383
+block 384
+block 385
+block 386
+block 387
+block 388
+block 389
+block 390
+block 391
+block 392
+block 393
+block 394
+block 395
+block 396
+block 397
+block 398
+block 399
+block 400
+block 401
+block 402
+block 403
+block 404
+block 405
+block 406
+block 407
+block 408
+block 409
+block 410
+block 411
+block 412
+block 413
+block 414
+block 415
+block 416
+block 417
+block 418
+block 419
+block 420
+block 421
+block 422
+block 423
+block 424
+block 425
+block 426
+block 427
+block 428
+block 429
+block 430
+block 431
+block 432
+block 433
+block 434
+block 435
+block 436
+block 437
+block 438
+block 439
+block 440
+block 441
+block 442
+block 443
+block 444
+block 445
+block 446
+map
+Map(100) {
+  75 => 38,
+  15 => 33,
+  88 => 41,
+  92 => 30,
+  27 => 20,
+  91 => 27,
+  71 => 35,
+  31 => 31,
+  32 => 25,
+  33 => 32,
+  35 => 34,
+  30 => 29,
+  44 => 31,
+  45 => 48,
+  50 => 43,
+  51 => 37,
+  52 => 32,
+  34 => 43,
+  57 => 36,
+  59 => 25,
+  62 => 32,
+  60 => 28,
+  58 => 21,
+  63 => 31,
+  64 => 29,
+  65 => 35,
+  66 => 28,
+  67 => 41,
+  68 => 37,
+  76 => 27,
+  77 => 35,
+  82 => 39,
+  85 => 36,
+  86 => 36,
+  83 => 38,
+  84 => 27,
+  87 => 41,
+  89 => 37,
+  94 => 31,
+  95 => 34,
+  96 => 38,
+  97 => 28,
+  98 => 30,
+  90 => 31,
+  46 => 34,
+  47 => 30,
+  38 => 30,
+  37 => 30,
+  48 => 30,
+  49 => 32,
+  54 => 23,
+  55 => 33,
+  56 => 42,
+  69 => 25,
+  70 => 37,
+  73 => 28,
+  74 => 32,
+  78 => 32,
+  79 => 40,
+  93 => 35,
+  80 => 36,
+  72 => 30,
+  8 => 37,
+  61 => 22,
+  28 => 25,
+  5 => 35,
+  29 => 28,
+  81 => 37,
+  2 => 48,
+  1 => 42,
+  6 => 40,
+  3 => 38,
+  24 => 39,
+  18 => 35,
+  36 => 37,
+  22 => 31,
+  7 => 38,
+  53 => 35,
+  4 => 34,
+  0 => 36,
+  10 => 40,
+  43 => 26,
+  17 => 34,
+  20 => 34,
+  19 => 40,
+  26 => 25,
+  9 => 40,
+  21 => 32,
+  16 => 32,
+  40 => 37,
+  42 => 21,
+  23 => 34,
+  11 => 28,
+  13 => 33,
+  14 => 40,
+  41 => 34,
+  25 => 26,
+  39 => 28,
+  12 => 25,
+  99 => 10
+}
+irMap
+Map(100) {
+  75 => 24,
+  15 => 19,
+  88 => 28,
+  92 => 20,
+  91 => 19,
+  71 => 17,
+  31 => 21,
+  32 => 13,
+  33 => 17,
+  35 => 20,
+  30 => 20,
+  44 => 19,
+  45 => 30,
+  50 => 24,
+  51 => 25,
+  52 => 15,
+  34 => 22,
+  57 => 26,
+  59 => 13,
+  62 => 22,
+  60 => 20,
+  58 => 15,
+  63 => 15,
+  64 => 16,
+  65 => 21,
+  66 => 19,
+  67 => 30,
+  68 => 28,
+  76 => 17,
+  77 => 24,
+  82 => 28,
+  85 => 20,
+  86 => 28,
+  83 => 21,
+  84 => 19,
+  87 => 29,
+  89 => 25,
+  94 => 18,
+  95 => 25,
+  96 => 27,
+  97 => 20,
+  98 => 18,
+  90 => 21,
+  8 => 20,
+  70 => 26,
+  5 => 27,
+  29 => 20,
+  81 => 27,
+  2 => 30,
+  1 => 30,
+  55 => 20,
+  56 => 22,
+  6 => 26,
+  3 => 25,
+  28 => 16,
+  18 => 21,
+  36 => 18,
+  24 => 22,
+  0 => 27,
+  10 => 28,
+  43 => 17,
+  93 => 22,
+  72 => 18,
+  26 => 18,
+  19 => 22,
+  73 => 13,
+  79 => 26,
+  16 => 20,
+  40 => 20,
+  42 => 10,
+  17 => 17,
+  20 => 18,
+  74 => 19,
+  69 => 16,
+  11 => 17,
+  49 => 21,
+  13 => 20,
+  14 => 29,
+  21 => 23,
+  80 => 25,
+  41 => 21,
+  27 => 14,
+  47 => 16,
+  25 => 16,
+  61 => 17,
+  78 => 18,
+  46 => 12,
+  53 => 21,
+  22 => 20,
+  39 => 11,
+  4 => 20,
+  7 => 27,
+  37 => 17,
+  23 => 21,
+  12 => 21,
+  99 => 7,
+  9 => 20,
+  38 => 6,
+  54 => 12,
+  48 => 16
+}
+rMap
+Map(100) {
+  27 => 6,
+  34 => 21,
+  46 => 22,
+  47 => 14,
+  38 => 24,
+  37 => 13,
+  48 => 14,
+  49 => 11,
+  54 => 11,
+  55 => 13,
+  56 => 20,
+  69 => 9,
+  70 => 11,
+  71 => 18,
+  73 => 15,
+  74 => 13,
+  78 => 14,
+  79 => 14,
+  92 => 10,
+  93 => 13,
+  80 => 11,
+  72 => 12,
+  94 => 13,
+  75 => 14,
+  65 => 14,
+  61 => 5,
+  28 => 9,
+  81 => 10,
+  24 => 17,
+  22 => 11,
+  7 => 11,
+  53 => 14,
+  4 => 14,
+  35 => 14,
+  98 => 12,
+  97 => 8,
+  17 => 17,
+  89 => 12,
+  20 => 16,
+  19 => 18,
+  1 => 12,
+  9 => 20,
+  30 => 9,
+  67 => 11,
+  8 => 17,
+  64 => 13,
+  31 => 10,
+  21 => 9,
+  59 => 12,
+  87 => 12,
+  62 => 10,
+  29 => 8,
+  45 => 18,
+  2 => 18,
+  23 => 13,
+  5 => 8,
+  52 => 17,
+  86 => 8,
+  60 => 8,
+  11 => 11,
+  16 => 12,
+  84 => 8,
+  83 => 17,
+  85 => 16,
+  77 => 11,
+  15 => 14,
+  0 => 9,
+  33 => 15,
+  18 => 14,
+  13 => 13,
+  41 => 13,
+  40 => 17,
+  10 => 12,
+  25 => 10,
+  90 => 10,
+  95 => 9,
+  36 => 19,
+  88 => 13,
+  44 => 12,
+  50 => 19,
+  32 => 12,
+  39 => 17,
+  42 => 11,
+  43 => 9,
+  57 => 10,
+  76 => 10,
+  51 => 12,
+  96 => 11,
+  6 => 14,
+  14 => 11,
+  63 => 16,
+  68 => 9,
+  66 => 9,
+  82 => 11,
+  3 => 13,
+  91 => 8,
+  26 => 7,
+  58 => 6,
+  12 => 4,
+  99 => 3
+}
+allfailed tx: 3295, rational: 1248, irrational: 2047, proportion: 0.3787556904400607
