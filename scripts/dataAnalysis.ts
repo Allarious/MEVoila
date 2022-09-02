@@ -13,6 +13,7 @@ export const dataAnalysis = async () => {
     let map = new Map();
     let irMap = new Map();
     let rMap = new Map();
+    let causeTxMap = new Map();
 
     for(let i = 0; i < data.length; i++){
         console.log(`block ${i}`);
@@ -35,39 +36,43 @@ export const dataAnalysis = async () => {
                 allFailedTx++;
                 if(value === "0"){
                     irrationalFailedTx++;
-                    if(irMap.has(txIndex)){
-                        irMap.set(txIndex, irMap.get(txIndex) + 1);
-                    }else{
-                        irMap.set(txIndex, 1);
-                    }
+                    incrementValueInMap(irMap, txIndex);
                 }else{
                     rationalFailedTx++;
-                    if(rMap.has(txIndex)){
-                        rMap.set(txIndex, rMap.get(txIndex) + 1);
-                    }else{
-                        rMap.set(txIndex, 1);
-                    }
+                    let causeTxData = await getTransactionByHash(value);
+                    let causeTxIndex = Math.floor((parseInt(causeTxData.transactionIndex, 16)/numOfTx) * 100);
+
+
+                    incrementValueInMap(causeTxMap, causeTxIndex);
+
+                    incrementValueInMap(rMap, txIndex);
                 }
 
-                if(map.has(txIndex)){
-                    map.set(txIndex, map.get(txIndex) + 1);
-                }else{
-                    map.set(txIndex, 1);
-                }
+                incrementValueInMap(map, txIndex);
 
             }
         }
     }
 
-    console.log("map")
-    console.log(map)
-    console.log("irMap")
-    console.log(irMap)
-    console.log("rMap")
-    console.log(rMap)
+    console.log("map");
+    console.log(map);
+    console.log("irMap");
+    console.log(irMap);
+    console.log("rMap");
+    console.log(rMap);
+    console.log("causeTxMap");
+    console.log(causeTxMap);
 
     console.log(`allfailed tx: ${allFailedTx}, rational: ${rationalFailedTx}, irrational: ${irrationalFailedTx}, proportion: ${rationalFailedTx/allFailedTx}`);
 
+}
+
+var incrementValueInMap = (map, index) => {
+    if(map.has(index)){
+        map.set(index, map.get(index) + 1);
+    }else{
+        map.set(index, 1);
+    }
 }
 
 dataAnalysis()
