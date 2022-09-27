@@ -1,13 +1,14 @@
 import { ethers } from "hardhat";
 import { getBlockTransactions } from "./getBlockTransactions";
 
-export const getBlockTxStatus = async (blockNumber: number) => {
+export const getBlockTxStatus = async (blockNumber: number, blockTxs: string[] | undefined = undefined) => {
 
     const { provider } = ethers
 
     try{
-
-        const blockTxs = await getBlockTransactions(blockNumber);
+        if(!blockTxs){
+            blockTxs = await getBlockTransactions(blockNumber);
+        }
 
         if(blockTxs === undefined || blockTxs.length === 0){
             return []
