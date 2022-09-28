@@ -6,7 +6,7 @@ describe("getBlockReceipts", function() {
 
     transactionReceipts.forEach((data) => {
         it(`should fetch the transaction receipts of ${data.blockHeight} correctly`, async () => {
-            const blockStatus = await getBlockTxStatus(15247560);
+            const blockStatus = await getBlockTxStatus(data.blockHeight);
             expect(blockStatus).to.eql(data.txReceipts);
         })
     })
