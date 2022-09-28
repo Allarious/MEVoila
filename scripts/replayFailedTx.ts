@@ -25,7 +25,6 @@ export const replayFailedTx = async function(blockNumber: number, replayBlocks: 
     let failedTxObjects = [];
     for(let [idx, txHash] of txHashes.entries()){
         if(txRec[idx] === "0x0"){
-            console.log(txHash);
             let txObj = await getTransactionByHash(txHash);
             normalizeTransactions(txObj);
             failedTxObjects.push(txObj);
@@ -34,7 +33,6 @@ export const replayFailedTx = async function(blockNumber: number, replayBlocks: 
 
     if(verbose) console.log(`Failed transactions are extracted and are ${failedTxObjects}`);
 
-    console.log(failedTxObjects);
     let newFailedObj: any[] = [];
     let failedTxMap = new Map();
     for(
@@ -49,14 +47,15 @@ export const replayFailedTx = async function(blockNumber: number, replayBlocks: 
                     const replaySts = await hre.ethers.provider.send("eth_call", [failedObj, blockValue]);
                     if(verbose) console.log(replaySts);
                     failedTxMap.set(failedObj.hash, block);
-                    console.log(`Success on block ${block}, transaction hash ${failedObj.hash}`);
+                    if(verbose) console.log(`Success at the start of the block ${block}, transaction hash ${failedObj.hash}`);
                 }catch(e){
                     newFailedObj.push(failedObj);
-                    console.log(`Fail on block ${block}, transaction hash ${failedObj.hash}`);
+                    if(verbose) console.log(`Fail at the start of the block ${block}, transaction hash ${failedObj.hash}`);
                 }
             }
             failedTxObjects = newFailedObj;
             newFailedObj = [];
+            if(!failedTxObjects.length) break;
     }
 
     for(let remainedFailedTx of failedTxObjects){
@@ -64,7 +63,9 @@ export const replayFailedTx = async function(blockNumber: number, replayBlocks: 
     }
 
     return failedTxMap;
-    // Utils functions //
+
+
+    // Util functions //
 
     /**
      * 
