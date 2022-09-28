@@ -67,7 +67,7 @@ export const dataAnalysis = async () => {
 
 }
 
-var incrementValueInMap = (map, index) => {
+var incrementValueInMap = (map: any, index: number) => {
     if(map.has(index)){
         map.set(index, map.get(index) + 1);
     }else{
