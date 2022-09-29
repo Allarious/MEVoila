@@ -17,14 +17,20 @@ export const getBlockTxStatus = async (blockNumber: number, blockTxs: string[] |
         let blockReceipts = []
 
         for(const tx of blockTxs){
-            const txReceipt = await provider.send("eth_getTransactionReceipt", [tx]);
-            blockReceipts.push(txReceipt.status);
+            try{
+                const txReceipt = await provider.send("eth_getTransactionReceipt", [tx]);
+                blockReceipts.push(txReceipt.status);
+            }catch{
+                console.log(`WARNING: Transaction receipt thrown an error, transactions hash is ${tx}`);
+                // Skip the transaction
+                blockReceipts.push("0x1")
+            }
         }
 
         return blockReceipts
 
     } catch (e: unknown) {
-
+        console.log(e);
         if (typeof e === "string") {
             e.toUpperCase();
         } else if (e instanceof Error) {
