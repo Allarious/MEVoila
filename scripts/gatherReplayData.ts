@@ -21,7 +21,7 @@ async function gatherReplayDataLive(verbose = true){
     }
 }
 
-async function gatherReplayInterval(interval: number[], verbose = false){
+async function gatherReplayInterval(interval: number[], fileName: string, verbose = false){
     
     let [firstBlock, lastBlock] = interval;
     let currrentBlock = await hre.ethers.provider.getBlockNumber();
@@ -29,18 +29,20 @@ async function gatherReplayInterval(interval: number[], verbose = false){
 
     for(let blockNumber = firstBlock; blockNumber <= lastBlock; blockNumber++){
         if(verbose) console.log(`Extracting block ${blockNumber}.`);
-        await replayAndStoreBlockData(blockNumber);
+        await replayAndStoreBlockData(blockNumber, fileName);
         if(verbose) console.log(`Finished extracting block number ${blockNumber}`);
     }
 }
 
-async function replayAndStoreBlockData(blockNumber: number){
+async function replayAndStoreBlockData(blockNumber: number, fileName = "replayData"){
 
     let startingTime = Date.now();
     let failedTxMap = await replayFailedTx(blockNumber, 5);
     let finishTime = Date.now();
 
-    await storeMapInFile(failedTxMap, "replayData.js", `"blockNumber": ${blockNumber},\n"time": ${finishTime - startingTime},`);
+    await storeMapInFile(failedTxMap, fileName + ".js", `"blockNumber": ${blockNumber},\n"time": ${finishTime - startingTime},`);
 }
 
-gatherReplayInterval([14500000, 15600000]);
+gatherReplayInterval([14500294, 14850000], "replayData");
+gatherReplayInterval([14850001, 15200000], "replayData1");
+gatherReplayInterval([15200001, 15600000], "replayData2");
