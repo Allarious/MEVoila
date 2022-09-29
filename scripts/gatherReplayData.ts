@@ -43,6 +43,7 @@ async function replayAndStoreBlockData(blockNumber: number, fileName = "replayDa
     await storeMapInFile(failedTxMap, fileName + ".js", `"blockNumber": ${blockNumber},\n"time": ${finishTime - startingTime},`);
 }
 
-gatherReplayInterval([14500294, 14850000], "replayData");
-gatherReplayInterval([14850001, 15200000], "replayData1");
-gatherReplayInterval([15200001, 15600000], "replayData2");
+// gatherReplayInterval([14500294, 14850000], "replayData");
+// gatherReplayInterval([14850001, 15200000], "replayData1");
+gatherReplayInterval([15272219, 15600000], "replayData2");
+// 15200078
