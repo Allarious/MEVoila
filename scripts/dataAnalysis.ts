@@ -1,4 +1,4 @@
-import data from '../data';
+import { data } from '../data1';
 import { getTransactionByHash } from './getTransactionByHash';
 
 console.log(`${data.length} blocks were processed...`);
@@ -14,57 +14,62 @@ export const dataAnalysis = async () => {
     let irMap = new Map();
     let rMap = new Map();
     let causeTxMap = new Map();
-
-    for(let i = 0; i < data.length; i++){
-        console.log(`block ${i}`);
-        let numOfTx = data[i].numOfTransactions;
-        if(!numOfTx){
-            continue;
-        }
-        if(data && data[i] && data[i].data){
-            let len = data[i].data?.length;
-            if(len === undefined){
+    try{
+        for(let i = 0; i < data.length; i++){
+            console.log(`block ${i}`);
+            let numOfTx = data[i].numOfTransactions;
+            if(!numOfTx){
                 continue;
             }
-            for(let j = 0; j < len; j++){
-                let key = Object.keys(data[i].data![j])[0];
-                let value = Object.values(data[i].data![j])[0];
-
-                let txData = await getTransactionByHash(key);
-                let txIndex = Math.floor((parseInt(txData.transactionIndex, 16)/numOfTx) * 100);
-
-                allFailedTx++;
-                if(value === "0"){
-                    irrationalFailedTx++;
-                    incrementValueInMap(irMap, txIndex);
-                }else{
-                    rationalFailedTx++;
-                    let causeTxData = await getTransactionByHash(value);
-                    let causeTxIndex = Math.floor((parseInt(causeTxData.transactionIndex, 16)/numOfTx) * 100);
-
-
-                    incrementValueInMap(causeTxMap, causeTxIndex);
-
-                    incrementValueInMap(rMap, txIndex);
+            if(data && data[i] && data[i].data){
+                let len = data[i].data?.length;
+                if(len === undefined){
+                    continue;
                 }
-
-                incrementValueInMap(map, txIndex);
-
+                for(let j = 0; j < len; j++){
+                    let key: string = String(Object.keys(data[i].data![j])[0]);
+                    let value: string = String(Object.values(data[i].data![j])[0]);
+    
+                    let txData = await getTransactionByHash(key);
+                    let txIndex = Math.floor((parseInt(txData.transactionIndex, 16)/numOfTx) * 100);
+    
+                    allFailedTx++;
+                    if(value === "0"){
+                        irrationalFailedTx++;
+                        incrementValueInMap(irMap, txIndex);
+                    }else{
+                        rationalFailedTx++;
+                        let causeTxData = await getTransactionByHash(value);
+                        let causeTxIndex = Math.floor((parseInt(causeTxData.transactionIndex, 16)/numOfTx) * 100);
+    
+    
+                        incrementValueInMap(causeTxMap, causeTxIndex);
+    
+                        incrementValueInMap(rMap, txIndex);
+                    }
+    
+                    incrementValueInMap(map, txIndex);
+    
+                }
             }
         }
+    }catch{}
+    dumpData()
+
+    
+
+    function dumpData(){
+        console.log("map");
+        console.log(map);
+        console.log("irMap");
+        console.log(irMap);
+        console.log("rMap");
+        console.log(rMap);
+        console.log("causeTxMap");
+        console.log(causeTxMap);
+
+        console.log(`allfailed tx: ${allFailedTx}, rational: ${rationalFailedTx}, irrational: ${irrationalFailedTx}, proportion: ${rationalFailedTx/allFailedTx}`);
     }
-
-    console.log("map");
-    console.log(map);
-    console.log("irMap");
-    console.log(irMap);
-    console.log("rMap");
-    console.log(rMap);
-    console.log("causeTxMap");
-    console.log(causeTxMap);
-
-    console.log(`allfailed tx: ${allFailedTx}, rational: ${rationalFailedTx}, irrational: ${irrationalFailedTx}, proportion: ${rationalFailedTx/allFailedTx}`);
-
 }
 
 var incrementValueInMap = (map: any, index: number) => {
