@@ -3,7 +3,7 @@ import { replayFailedTx } from "./replayFailedTx";
 import storeMapInFile from './utils/storeMapInFile';
 
 
-async function gatherReplayDataLive(verbose = true){
+export async function gatherReplayDataLive(verbose = true){
     let currentBlock, previousBlock;
     while(true){
         currentBlock = await hre.ethers.provider.getBlockNumber();
@@ -21,9 +21,10 @@ async function gatherReplayDataLive(verbose = true){
     }
 }
 
-async function gatherReplayInterval(interval: number[], fileName: string, verbose = false){
+export async function gatherReplayInterval(interval: number[], fileName: string, verbose = false){
     
     let [firstBlock, lastBlock] = interval;
+    if(lastBlock < firstBlock) throw Error(`invalid interval start ${firstBlock}, end ${lastBlock}`);
     let currrentBlock = await hre.ethers.provider.getBlockNumber();
     if(currrentBlock < lastBlock) throw Error("The last block of interval is not mined yet.")
 
@@ -37,7 +38,7 @@ async function gatherReplayInterval(interval: number[], fileName: string, verbos
 async function replayAndStoreBlockData(blockNumber: number, fileName = "replayData"){
 
     let startingTime = Date.now();
-    let failedTxMap = await replayFailedTx(blockNumber, 5);
+    let failedTxMap = await replayFailedTx(blockNumber, 4);
     let finishTime = Date.now();
 
     await storeMapInFile(failedTxMap, fileName + ".js", `"blockNumber": ${blockNumber},\n"time": ${finishTime - startingTime},`);
