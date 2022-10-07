@@ -10,7 +10,7 @@ import hre from 'hardhat';
  * @dev This function take a blockNumber as an input, extracts the relevant block from Ethereum mainnet and replays
  * the failed transactions on the previous blocks.
  */
-export const replayFailedTx = async function(blockNumber: number, replayBlocks: number, verbose: boolean = false){
+export const replayFailedTx = async function(blockNumber: number, replayBlocks: number, verbose: boolean = true){
 
     const [txHashes, txRec] = await fetchBlockData(blockNumber);
 
@@ -51,6 +51,7 @@ export const replayFailedTx = async function(blockNumber: number, replayBlocks: 
                 }catch(e){
                     newFailedObj.push(failedObj);
                     if(verbose) console.log(`Fail at the start of the block ${block}, transaction hash ${failedObj.hash}`);
+                    if(verbose) console.log(e);
                 }
             }
             failedTxObjects = newFailedObj;
