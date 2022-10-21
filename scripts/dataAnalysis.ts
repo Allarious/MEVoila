@@ -15,7 +15,7 @@ export const dataAnalysis = async () => {
     let rMap = new Map();
     let causeTxMap = new Map();
     try{
-        for(let i = 0; i < data.length; i++){
+        for(let i = 6576; i < data.length; i++){
             console.log(`block ${i}`);
             let numOfTx = data[i].numOfTransactions;
             if(!numOfTx){
@@ -53,7 +53,9 @@ export const dataAnalysis = async () => {
                 }
             }
         }
-    }catch{}
+    }catch{
+        console.log("Failed to finish the analysis");
+    }
     dumpData()
 
     

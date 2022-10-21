@@ -1,0 +1,12 @@
+Fail at the start of the block 14500052, transaction hash 0xad0392310c16c4d84c173cba886af87ccd6ba1af565c170aa645a3d93b49e35d
+Error: setBlockContext called when checkpointed
+    at checkpointedError (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/fork/ForkStateManager.ts:37:3)
+    at ForkStateManager.setBlockContext (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/fork/ForkStateManager.ts:344:13)
+    at HardhatNode._setBlockContext (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/node.ts:2158:33)
+    at HardhatNode._runInBlockContext (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/node.ts:2134:16)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async HardhatNode.runCall (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/node.ts:581:19)
+    at async EthModule._callAction (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/modules/eth.ts:354:9)
+    at async HardhatNetworkProvider.request (/home/allarious/Workspace/MEVoila/node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:118:18)
+    at async EthersProviderWrapper.send (/home/allarious/Workspace/MEVoila/node_modules/@nomiclabs/hardhat-ethers/src/internal/ethers-provider-wrapper.ts:13:20)
+    at async replayFailedTx (/home/allarious/Workspace/MEVoila/scripts/replayFailedTx.ts:47:39)
