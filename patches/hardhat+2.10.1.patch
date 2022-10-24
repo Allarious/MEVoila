@@ -1,5 +1,5 @@
 diff --git a/node_modules/hardhat/internal/hardhat-network/provider/fork/ForkStateManager.js b/node_modules/hardhat/internal/hardhat-network/provider/fork/ForkStateManager.js
-index 20b956b..7258fc0 100644
+index 20b956b..ab49e2a 100644
 --- a/node_modules/hardhat/internal/hardhat-network/provider/fork/ForkStateManager.js
 +++ b/node_modules/hardhat/internal/hardhat-network/provider/fork/ForkStateManager.js
 @@ -220,7 +220,18 @@ class ForkStateManager {
@@ -22,3 +22,23 @@ index 20b956b..7258fc0 100644
          }
          if (irregularState !== undefined) {
              this._setStateRoot(irregularState);
+@@ -244,7 +255,18 @@ class ForkStateManager {
+     }
+     restoreForkBlockContext(stateRoot) {
+         if (this._stateCheckpoints.length !== 0) {
+-            throw checkpointedError("restoreForkBlockContext");
++            // throw checkpointedError("restoreForkBlockContext");
++            // This is not a nice change! I'm doing this since I only want to call transactions at the start of the blocks 
++            // and do not want to track changes so I do not want any commits!
++
++            /////////////////////////////////////////////////////
++            // *****$$$$$$ DO NOT TRY THIS AT HOME $$$$$$***** //
++            /////////////////////////////////////////////////////
++
++            console.log("$$$$$$$$$$### Skipped an uncommited change! Forked! ###$$$$$$$$$$");
++
++            this._stateCheckpoints = [];
++            this._accessedStorage = [new Map()];
+         }
+         this._setStateRoot(stateRoot);
+         if (this._contextChanged) {
