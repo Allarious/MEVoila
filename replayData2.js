@@ -1,4 +1,4 @@
-export default[{
+{
  "blockNumber": 15200241,
 "time": 164194,
 "data" : [
@@ -51973,4 +51973,4 @@ export default[{
 "data" : [
 {"0x42fec0c20baadc2a1b610792a813292fac1c627cbf2ea78b18aa3bc445f29939": "0"}
 ],
-}]
+},
