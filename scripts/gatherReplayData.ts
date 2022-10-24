@@ -65,7 +65,7 @@ function getBlockNumbers(fileName: string): number[]{
     return [nconf.get(fileName + "_start"), nconf.get(fileName + "_end")];
 }
 
-gatherReplayInterval("replayData");
+gatherReplayInterval("replayData0");
 // gatherReplayInterval([14850001, 15200000], "replayData1");
 // gatherReplayInterval([15272219, 15600000], "replayData2");
 // 15200078

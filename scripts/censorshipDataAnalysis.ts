@@ -1,4 +1,4 @@
-import data from "../replayData";
+import data from "../replayData0";
 import data1 from "../replayData1";
 import data2 from "../replayData2";
 
