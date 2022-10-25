@@ -20,7 +20,7 @@ import hre from 'hardhat';
  * This function does not need to worry about the current state having access to the blocknumber, this might
  * not be the best design decision!
  */
-async function checkFailedTransactionsOnPreviousBlocks(blockNumber: number, previousBlocks: number, verbose = true){
+async function checkFailedTransactionsOnPreviousBlocks(blockNumber: number, previousBlocks: number, verbose = false){
 
     if(verbose) console.log(`Getting block ${blockNumber} transactions...`);
     let blockTxHashes = await getBlockTransactions(blockNumber);
