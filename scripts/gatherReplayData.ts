@@ -3,8 +3,7 @@ import { replayFailedTx } from "./replayFailedTx";
 import storeMapInFile from './utils/storeMapInFile';
 
 import nconf, { file } from "nconf";
-nconf.use('file', { file: './runVariables.json' });
-nconf.load();
+
 
 export async function gatherReplayDataLive(verbose = true){
     let currentBlock, previousBlock;
@@ -25,7 +24,10 @@ export async function gatherReplayDataLive(verbose = true){
 }
 
 export async function gatherReplayInterval(fileName: string, verbose = false){
-    
+
+    nconf.use('file', { file: `./scripts/threads/${fileName}.json` });
+    nconf.load();
+
     let [firstBlock, lastBlock] = getBlockNumbers(fileName);
     if(lastBlock < firstBlock) throw Error(`invalid interval start ${firstBlock}, end ${lastBlock}`);
     let currrentBlock = await hre.ethers.provider.getBlockNumber();
