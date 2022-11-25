@@ -1,17 +1,25 @@
-// import data from "../../replayData0";
-var data: any[] = [14499990];
+
 import {ethers} from "hardhat";
+import storeObjectInFile from "../utils/storeObjectInFile";
 
 /**
  * @param numberOfBlocks Number of blocks that is used in the data imported that means the number of blocks replayed, is this really needed?
  */
 async function blockCensorship(numberOfBlocks: number){
+    for(let blockNumber = 14531522; blockNumber < 15500000; blockNumber++){
+        // console.log(blockNumber);
+        let blockData = await ethers.provider.send("eth_getBlockByNumber", ["0x" + blockNumber.toString(16), false]);
+        let {
+            gasLimit,
+            gasUsed
+        } = blockData;
 
-    var blockToMaxGas = {};
-    for(let entry of data){
-        let blockNumber = entry.blockNumber;
-        let blockData = await ethers.provider.send("eth_getBlockByNumber", [blockNumber]);
-        console.log(blockData);
+        let storeObj = {
+            blockNumber,
+            gasLimit: parseInt(gasLimit, 16),
+            gasUsed: parseInt(gasUsed, 16)
+        }
+        await storeObjectInFile(storeObj, "blockData.js");
     }
 }
 
