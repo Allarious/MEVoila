@@ -53,6 +53,9 @@ async function blockCensorship(){
         obj.gasLimit = parseInt(blockData.gasLimit, 16);
         obj.gasUsed = parseInt(blockData.gasUsed, 16);
         obj.timestamp = parseInt(blockData.timestamp, 16);
+        obj.numOfTxs = blockData.transactions.length;
+        obj.miner = blockData.miner;
+
         let flashbotsTxs: any = {};
         if(isFlashBots){
             for(let [idx, tx] of flashbotsBlock.transactions.entries()){
@@ -82,6 +85,8 @@ async function blockCensorship(){
             txObject.maxPriorityFeePerGas = parseInt(txData.maxPriorityFeePerGas, 16);
             txObject.effectiveGasPrice = parseInt(txReceiptData.effectiveGasPrice, 16);
             txObject.cumulativeGasUsed = parseInt(txReceiptData.cumulativeGasUsed, 16);
+            txObject.from = txReceiptData.from;
+            txObject.to = txReceiptData.to;
 
             obj.transactions.push(txObject);
         }
