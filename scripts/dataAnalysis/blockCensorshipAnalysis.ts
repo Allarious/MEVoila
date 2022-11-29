@@ -38,7 +38,7 @@ async function blockCensorship(){
         //fetching receipts
         let blockReceipts: any[] = await fetchReceiptsFromBlock(blockNumber);
 
-        if(flashbotsBlocks[flashbotsCounter]["block_number"] === blockNumber){
+        if(flashbotsBlocks.length && flashbotsBlocks[flashbotsCounter]["block_number"] === blockNumber){
             flashbotsBlock = flashbotsBlocks[flashbotsCounter++];
             isFlashBots = true;
         }
