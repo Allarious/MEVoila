@@ -2,7 +2,7 @@ import hre from "hardhat";
 import { replayFailedTx } from "./replayFailedTx";
 import storeMapInFile from './utils/storeMapInFile';
 
-import nconf, { file } from "nconf";
+import nconf from "nconf";
 
 
 export async function gatherReplayDataLive(verbose = false){
