@@ -93,7 +93,7 @@ async function blockCensorship(){
 
         process.stdout.write(JSON.stringify(obj) + ',\n');
 
-        updateStartingBlock("start", i);
+        updateStartingBlock("start", i + 1);
     }
 }
 function getStartingBlock(): number{
