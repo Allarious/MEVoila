@@ -1,5 +1,5 @@
 import { add } from "nconf";
-import data from "../../censorshipData/censorshipData";
+import data from "../../censorshipData/censorshipData1";
 
 // for(let i = 0; i < data.length; i++){
 //     if(data[i]["blockNumber"] != data[i + 1]["blockNumber"] - 1){
@@ -31,12 +31,19 @@ function censorshipDataProcessing(){
     var rationalTxIndexFb: any = {};
     var irrationalTxIndexFb: any = {};
 
+    var censorship: any = Array.from({length: 3}, () => 0);
+    var censorshipFb: any = Array.from({length: 3}, () => 0);
+
+    var censorshipAmount: any = 0;
+    var censorshipAmountFb: any = 0;
+
     for(let index = 0;
         index < data.length;
         index++){
             let block = data[index];
             let blockNumber = block["blockNumber"];
             let isFb = block["isFlashBotsBlock"];
+            let numOfTxs = block["numOfTxs"];
             if(isFb){
                 /**
                 * Block gas check for fb/normal
@@ -59,25 +66,46 @@ function censorshipDataProcessing(){
                         //irrational Fb
                         irrationalTransactionsFb += 1
                         addToDict(irrationalTxGasFb, tx.gasUsed, 1000);
-                        addToDict(irrationalTxIndexFb, tx.index);
+                        addToDict(irrationalTxIndexFb * 300 / numOfTxs , tx.index);
                     }else{
                         //irrational
                         irrationalTransactions += 1;
                         addToDict(irrationalTxGas, tx.gasUsed, 1000);
-                        addToDict(irrationalTxIndex, tx.index);
+                        addToDict(irrationalTxIndex * 300 / numOfTxs, tx.index);
                     }
                }else{
                     let previousBlocks = blockNumber - parseInt(tx.runAtBlock);
+                    for(let p = 1; p <= previousBlocks; p++){
+                        let runAtBlockData = data[index - p];
+                        if(runAtBlockData){
+                            if(runAtBlockData["blockNumber"] !== blockNumber - p){
+                                throw new Error(`blocks are not in order block ${runAtBlockData["blockNumber"]} is found instead of ${blockNumber - p}`);
+                            }
+                            let gasLeft = runAtBlockData.gasLimit - runAtBlockData.gasUsed;
+                            if(gasLeft >= tx.gasLimit){
+                                if(runAtBlockData["isFlashBotsBlock"] === true){
+                                    censorshipAmountFb += 1;
+                                }else{
+                                    censorshipAmount += 1;
+                                }
+                                if(isFb){
+                                    censorshipFb[p - 1] += 1;
+                                }else{
+                                    censorship[p - 1] += 1;
+                                }
+                            }
+                        }
+                    }
                     if(isFb){
                         //rational Fb
                         rationalityPreviousFbBlocks[previousBlocks] += 1;
                         addToDict(rationalTxGasFb, tx.gasUsed, 1000);
-                        addToDict(rationalTxIndexFb, tx.index);
+                        addToDict(rationalTxIndexFb * 300 / numOfTxs, tx.index);
                     }else{
                         //rational
                         rationalityPreviousBlocks[previousBlocks] += 1;
                         addToDict(rationalTxGas, tx.gasUsed, 1000);
-                        addToDict(rationalTxIndex, tx.index);
+                        addToDict(rationalTxIndex * 300 / numOfTxs, tx.index);
                     }
                }
            }
@@ -102,8 +130,11 @@ function censorshipDataProcessing(){
     console.log("rationalTxIndexFb ", rationalTxIndexFb);
     console.log("irrationalTxIndexFb ", irrationalTxIndexFb);
 
+    console.log("censorship ", censorship);
+    console.log("censorshipFb ", censorshipFb);
 
-
+    console.log("censorshipAmount ", censorshipAmount);
+    console.log("censorshipAmountFb ", censorshipAmountFb);
 
     function addToDict(dict: any,  val: number, factor: number = 1){
         let index = Math.floor(val / factor);
