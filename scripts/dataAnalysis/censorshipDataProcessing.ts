@@ -1,11 +1,22 @@
 import { add } from "nconf";
-import data from "../../censorshipData/censorshipData1";
+// import data from "../../censorshipData/censorshipData1";
+import data from "../../censorshipData/censorshipData02";
+// import data from "../../censorshipData/data";
 
-// for(let i = 0; i < data.length; i++){
+// console.log("Start of data");
+// for(let i = 0; i < data.length - 1; i++){
 //     if(data[i]["blockNumber"] != data[i + 1]["blockNumber"] - 1){
 //         console.log(data[i]["blockNumber"]);
 //     }
 // }
+// console.log("End of data");
+// console.log("Start of data1");
+// for(let i = 0; i < data1.length - 1; i++){
+//     if(data1[i]["blockNumber"] != data1[i + 1]["blockNumber"] - 1){
+//         console.log(data1[i]["blockNumber"]);
+//     }
+// }
+// console.log("end of data1");
 
 /**
  * @dev Processes censorship data for the final data outputs
@@ -18,8 +29,8 @@ function censorshipDataProcessing(){
     var rationalityPreviousBlocks = Array.from({length: 4}, () => 0);
     var rationalityPreviousFbBlocks = Array.from({length: 4}, () => 0);
 
-    var irrationalTransactions = 0;
-    var irrationalTransactionsFb = 0;
+    var irrationalTransactions: number = 0;
+    var irrationalTransactionsFb: number = 0;
 
     var rationalTxGas: any = {};
     var irrationalTxGas: any = {};
@@ -37,6 +48,24 @@ function censorshipDataProcessing(){
     var censorshipAmount: any = 0;
     var censorshipAmountFb: any = 0;
 
+    var numberOfTransactions: any = 0;
+    var numberOfTransactionsFb: any = 0;
+
+    var numberOfFailedTransactions: any = 0;
+    var numberOfFailedTransactionsFb: any = 0;
+
+    var numberOfRationalTransactions: any = 0;
+    var numberOfRationalTransactionsFb: any = 0;
+
+    var overAllGasUsed: any = 0;
+    var overAllGasUsedFb: any = 0;
+
+    var gasPriceRational: any = 0
+    var gasPriceRationalFb: any = 0
+    
+    var gasPriceIrrational: any = 0
+    var gasPriceIrrationalFb: any = 0;
+
     for(let index = 0;
         index < data.length;
         index++){
@@ -48,11 +77,19 @@ function censorshipDataProcessing(){
                 /**
                 * Block gas check for fb/normal
                 */
-                // blockGasFb[block.gasUsed / 100000] = blockGasFb[block.gasUsed / 100000] ? blockGasFb[block.gasUsed / 100000] + 1 : 1;
                 addToDict(blockGasFb, block.gasUsed, 100000);
+                numberOfTransactionsFb += numOfTxs;
+                numberOfFailedTransactionsFb += block.transactions.length;
+                overAllGasUsedFb += block.gasUsed;
             }else{
-                // blockGas[block.gasUsed / 100000] = blockGas[block.gasUsed / 100000] ? blockGas[block.gasUsed / 100000] + 1 : 1;
                 addToDict(blockGas, block.gasUsed, 100000);
+                numberOfTransactions += numOfTxs;
+                numberOfFailedTransactions += block.transactions.length;
+                overAllGasUsed += block.gasUsed;
+            }
+
+            if(numOfTxs === 0){
+                continue;
             }
 
            for(let tx of block.transactions){
@@ -65,13 +102,15 @@ function censorshipDataProcessing(){
                     if(isFb){
                         //irrational Fb
                         irrationalTransactionsFb += 1
+                        gasPriceIrrationalFb += tx.gasUsed;
                         addToDict(irrationalTxGasFb, tx.gasUsed, 1000);
-                        addToDict(irrationalTxIndexFb * 300 / numOfTxs , tx.index);
+                        addToDict(irrationalTxIndexFb, tx.index * 300 / numOfTxs);
                     }else{
                         //irrational
                         irrationalTransactions += 1;
+                        gasPriceIrrational += tx.gasUsed;
                         addToDict(irrationalTxGas, tx.gasUsed, 1000);
-                        addToDict(irrationalTxIndex * 300 / numOfTxs, tx.index);
+                        addToDict(irrationalTxIndex, tx.index * 300 / numOfTxs);
                     }
                }else{
                     let previousBlocks = blockNumber - parseInt(tx.runAtBlock);
@@ -99,13 +138,17 @@ function censorshipDataProcessing(){
                     if(isFb){
                         //rational Fb
                         rationalityPreviousFbBlocks[previousBlocks] += 1;
+                        numberOfRationalTransactionsFb += 1;
+                        gasPriceRationalFb += tx.gasUsed;
                         addToDict(rationalTxGasFb, tx.gasUsed, 1000);
-                        addToDict(rationalTxIndexFb * 300 / numOfTxs, tx.index);
+                        addToDict(rationalTxIndexFb, tx.index * 300 / numOfTxs);
                     }else{
                         //rational
                         rationalityPreviousBlocks[previousBlocks] += 1;
+                        numberOfRationalTransactions += 1;
+                        gasPriceRational += tx.gasUsed;
                         addToDict(rationalTxGas, tx.gasUsed, 1000);
-                        addToDict(rationalTxIndex * 300 / numOfTxs, tx.index);
+                        addToDict(rationalTxIndex, tx.index * 300 / numOfTxs);
                     }
                }
            }
@@ -135,6 +178,24 @@ function censorshipDataProcessing(){
 
     console.log("censorshipAmount ", censorshipAmount);
     console.log("censorshipAmountFb ", censorshipAmountFb);
+
+    console.log("numberOfTransactions ", numberOfTransactions)
+    console.log("numberOfTransactionsFb ", numberOfTransactionsFb);
+
+    console.log("numberOfFailedTransactions ", numberOfFailedTransactions);
+    console.log("numberOfFailedTransactionsFb ", numberOfFailedTransactionsFb);
+
+    console.log("numberOfRationalTransactions ", numberOfRationalTransactions);
+    console.log("numberOfRationalTransactionsFb ", numberOfRationalTransactionsFb);
+
+    console.log("overAllGasUsed ", overAllGasUsed);
+    console.log("overAllGasUsedFb ", overAllGasUsedFb);
+
+    console.log("gasPriceRational ", gasPriceRational);
+    console.log("gasPriceRationalFb ", gasPriceRationalFb);
+    
+    console.log("gasPriceIrrational ", gasPriceIrrational);
+    console.log("gasPriceIrrationalFb ", gasPriceIrrationalFb);
 
     function addToDict(dict: any,  val: number, factor: number = 1){
         let index = Math.floor(val / factor);
