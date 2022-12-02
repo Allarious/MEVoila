@@ -154,48 +154,48 @@ function censorshipDataProcessing(){
            }
     }
 
-    console.log("blockGas ", blockGas);
-    console.log("blockGasFb ", blockGasFb);
+    console.log("blockGas: ", blockGas, ",");
+    console.log("blockGasFb: ", blockGasFb, ",");
 
-    console.log("rationalityPreviousBlocks ", rationalityPreviousBlocks)
-    console.log("rationalityPreviousFbBlocks ", rationalityPreviousFbBlocks);
+    console.log("rationalityPreviousBlocks: ", rationalityPreviousBlocks, ",")
+    console.log("rationalityPreviousFbBlocks: ", rationalityPreviousFbBlocks, ",");
 
-    console.log("irrationalTransactions ", irrationalTransactions);
-    console.log("irrationalTransactionsFb ", irrationalTransactionsFb);
+    console.log("irrationalTransactions: ", irrationalTransactions, ",");
+    console.log("irrationalTransactionsFb: ", irrationalTransactionsFb, ",");
 
-    console.log("rationalTxGas ", rationalTxGas);
-    console.log("irrationalTxGas ", irrationalTxGas);
-    console.log("rationalTxGasFb ", rationalTxGasFb)
-    console.log("irrationalTxGasFb ", irrationalTxGasFb)
+    console.log("rationalTxGas: ", rationalTxGas, ",");
+    console.log("irrationalTxGas: ", irrationalTxGas, ",");
+    console.log("rationalTxGasFb: ", rationalTxGasFb, ",")
+    console.log("irrationalTxGasFb: ", irrationalTxGasFb, ",")
 
-    console.log("rationalTxIndex ", rationalTxIndex);
-    console.log("irrationalTxIndex ", irrationalTxIndex);
-    console.log("rationalTxIndexFb ", rationalTxIndexFb);
-    console.log("irrationalTxIndexFb ", irrationalTxIndexFb);
+    console.log("rationalTxIndex: ", rationalTxIndex, ",");
+    console.log("irrationalTxIndex: ", irrationalTxIndex, ",");
+    console.log("rationalTxIndexFb: ", rationalTxIndexFb, ",");
+    console.log("irrationalTxIndexFb: ", irrationalTxIndexFb, ",");
 
-    console.log("censorship ", censorship);
-    console.log("censorshipFb ", censorshipFb);
+    console.log("censorship: ", censorship, ",");
+    console.log("censorshipFb: ", censorshipFb, ",");
 
-    console.log("censorshipAmount ", censorshipAmount);
-    console.log("censorshipAmountFb ", censorshipAmountFb);
+    console.log("censorshipAmount: ", censorshipAmount, ",");
+    console.log("censorshipAmountFb: ", censorshipAmountFb, ",");
 
-    console.log("numberOfTransactions ", numberOfTransactions)
-    console.log("numberOfTransactionsFb ", numberOfTransactionsFb);
+    console.log("numberOfTransactions: ", numberOfTransactions, ",")
+    console.log("numberOfTransactionsFb: ", numberOfTransactionsFb, ",");
 
-    console.log("numberOfFailedTransactions ", numberOfFailedTransactions);
-    console.log("numberOfFailedTransactionsFb ", numberOfFailedTransactionsFb);
+    console.log("numberOfFailedTransactions: ", numberOfFailedTransactions, ",");
+    console.log("numberOfFailedTransactionsFb: ", numberOfFailedTransactionsFb, ",");
 
-    console.log("numberOfRationalTransactions ", numberOfRationalTransactions);
-    console.log("numberOfRationalTransactionsFb ", numberOfRationalTransactionsFb);
+    console.log("numberOfRationalTransactions: ", numberOfRationalTransactions, ",");
+    console.log("numberOfRationalTransactionsFb: ", numberOfRationalTransactionsFb, ",");
 
-    console.log("overAllGasUsed ", overAllGasUsed);
-    console.log("overAllGasUsedFb ", overAllGasUsedFb);
+    console.log("overAllGasUsed: ", overAllGasUsed, ",");
+    console.log("overAllGasUsedFb: ", overAllGasUsedFb, ",");
 
-    console.log("gasPriceRational ", gasPriceRational);
-    console.log("gasPriceRationalFb ", gasPriceRationalFb);
+    console.log("gasPriceRational: ", gasPriceRational, ",");
+    console.log("gasPriceRationalFb: ", gasPriceRationalFb, ",");
     
-    console.log("gasPriceIrrational ", gasPriceIrrational);
-    console.log("gasPriceIrrationalFb ", gasPriceIrrationalFb);
+    console.log("gasPriceIrrational: ", gasPriceIrrational, ",");
+    console.log("gasPriceIrrationalFb: ", gasPriceIrrationalFb, ",");
 
     function addToDict(dict: any,  val: number, factor: number = 1){
         let index = Math.floor(val / factor);
