@@ -1,0 +1,26 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+#Hardhat files
+cache
+artifacts
+
+#API key
+config.ts
+
+backup
+censorshipData
+data-file
+logData
+
+data.ts
+data1.ts
+replayData0.js
+replayData1.js
+replayData2.js
+blockData.js
+blockData1.js
