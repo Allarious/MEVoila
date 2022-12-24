@@ -66,6 +66,9 @@ function censorshipDataProcessing(){
     var gasPriceIrrational: any = 0
     var gasPriceIrrationalFb: any = 0;
 
+    var miners: any = {};
+    var minersFilter: any = {};
+
     for(let index = 0;
         index < data.length;
         index++){
@@ -73,6 +76,9 @@ function censorshipDataProcessing(){
             let blockNumber = block["blockNumber"];
             let isFb = block["isFlashBotsBlock"];
             let numOfTxs = block["numOfTxs"];
+            let miner = block["miner"];
+
+            miners[miner] = miners[miner] ? miners[miner] + 1 : 1;
             if(isFb){
                 /**
                 * Block gas check for fb/normal
@@ -122,6 +128,8 @@ function censorshipDataProcessing(){
                             }
                             let gasLeft = runAtBlockData.gasLimit - runAtBlockData.gasUsed;
                             if(gasLeft >= tx.gasLimit){
+                                let previousMiner = runAtBlockData["miner"];
+                                miners[previousMiner] = miners[previousMiner] ? miners[previousMiner] + 1 : 1;
                                 if(runAtBlockData["isFlashBotsBlock"] === true){
                                     censorshipAmountFb += 1;
                                 }else{

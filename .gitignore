@@ -14,3 +14,11 @@ config.ts
 
 backup
 censorshipData
+data-file
+logData
+
+data.ts
+data1.ts
+replayData0.js
+replayData1.js
+replayData2.js
