@@ -1,22 +1,5 @@
-import { add } from "nconf";
 // import data from "../../censorshipData/censorshipData1";
 import data from "../../censorshipData/censorshipData02";
-// import data from "../../censorshipData/data";
-
-// console.log("Start of data");
-// for(let i = 0; i < data.length - 1; i++){
-//     if(data[i]["blockNumber"] != data[i + 1]["blockNumber"] - 1){
-//         console.log(data[i]["blockNumber"]);
-//     }
-// }
-// console.log("End of data");
-// console.log("Start of data1");
-// for(let i = 0; i < data1.length - 1; i++){
-//     if(data1[i]["blockNumber"] != data1[i + 1]["blockNumber"] - 1){
-//         console.log(data1[i]["blockNumber"]);
-//     }
-// }
-// console.log("end of data1");
 
 /**
  * @dev Processes censorship data for the final data outputs
@@ -28,6 +11,9 @@ function censorshipDataProcessing(){
 
     var rationalityPreviousBlocks = Array.from({length: 4}, () => 0);
     var rationalityPreviousFbBlocks = Array.from({length: 4}, () => 0);
+
+    var censorshipByDistanceFb: any = Array.from({length: 4}, () => 0);
+    var censorshipByDistance: any = Array.from({length: 4}, () => 0);
 
     var irrationalTransactions: number = 0;
     var irrationalTransactionsFb: number = 0;
@@ -65,6 +51,9 @@ function censorshipDataProcessing(){
     
     var gasPriceIrrational: any = 0
     var gasPriceIrrationalFb: any = 0;
+
+    var landedInFb: any = 0;
+    var landedInNormal: any = 0;
 
     var miners: any = {};
     var minersFilter: any = {};
@@ -120,6 +109,7 @@ function censorshipDataProcessing(){
                     }
                }else{
                     let previousBlocks = blockNumber - parseInt(tx.runAtBlock);
+                    let isCensored = false;
                     for(let p = 1; p <= previousBlocks; p++){
                         let runAtBlockData = data[index - p];
                         if(runAtBlockData){
@@ -128,12 +118,18 @@ function censorshipDataProcessing(){
                             }
                             let gasLeft = runAtBlockData.gasLimit - runAtBlockData.gasUsed;
                             if(gasLeft >= tx.gasLimit){
+
                                 let previousMiner = runAtBlockData["miner"];
                                 miners[previousMiner] = miners[previousMiner] ? miners[previousMiner] + 1 : 1;
+
+                                isCensored = true;
+
                                 if(runAtBlockData["isFlashBotsBlock"] === true){
                                     censorshipAmountFb += 1;
+                                    censorshipByDistanceFb[previousBlocks - p] += 1;
                                 }else{
                                     censorshipAmount += 1;
+                                    censorshipByDistance[previousBlocks - p] += 1;
                                 }
                                 if(isFb){
                                     censorshipFb[p - 1] += 1;
@@ -143,6 +139,15 @@ function censorshipDataProcessing(){
                             }
                         }
                     }
+
+                    if(isCensored){
+                        if(isFb){
+                            landedInFb++;
+                        }else{
+                            landedInNormal++;
+                        }
+                    }
+
                     if(isFb){
                         //rational Fb
                         rationalityPreviousFbBlocks[previousBlocks] += 1;
@@ -204,6 +209,12 @@ function censorshipDataProcessing(){
     
     console.log("gasPriceIrrational: ", gasPriceIrrational, ",");
     console.log("gasPriceIrrationalFb: ", gasPriceIrrationalFb, ",");
+
+    console.log("censorshipByDistanceFb:", censorshipByDistanceFb, ",");
+    console.log("censorshipByDistance", censorshipByDistance, ",");
+
+    console.log("landedInFb", landedInFb, ",");
+    console.log("landedInNormal", landedInNormal, ",");
 
     function addToDict(dict: any,  val: number, factor: number = 1){
         let index = Math.floor(val / factor);
