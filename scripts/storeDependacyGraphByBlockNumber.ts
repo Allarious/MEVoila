@@ -24,7 +24,7 @@ export const FindDependancyGraphInBlockchain = async () => {
         const txHashes = await getBlockTransactions(blockNumber);
         const numOfTransactions = txHashes?.length;
 
-        const fileName = "data1.js";
+        const fileName = "dataDependency.js";
 
         console.log(`Finding the dependancy graph in block ${blockNumber}...`);
         let dependancyGraph;
@@ -85,3 +85,28 @@ FindDependancyGraphInBlockchain();
 // '0x31b9a35d206adab4cc346f68cc1d745f64b9c15623f49ccb883b0e37f1b00408' => '0xffd0ec80ac3cfecdc1f370efe8ea039b893c5141d365557129d4342431de88c1',
 // '0x0a27a7eb2d9cef32db0898867be580881c5acc0802ba68a9ace48d5dfe6f4eb3' => '0x990316021fc7250c653b1c4828bd5c8d127395ae579102eeb53e0980bad8c913',
 // '0xe39a3bfa9904b8134de8d75973262f2e100f1e70e71734d18d8f86a713ce6eaa' => '0x5e74cce772acde0fb02f6318eb9df81f436e3db17eebc28f04081b14f74a9b4a'
+
+
+/**
+ * Errorm rerunning the program...
+Error HH601: Script scripts/dataAnalysis/storeDependacyGraphByBlockNumber.ts doesn't exist.
+For more info go to https://hardhat.org/HH601 or run Hardhat with --show-stack-traces
+Errorm rerunning the program...
+Error HH601: Script scripts/dataAnalysis/storeDependacyGraphByBlockNumber.ts doesn't exist.
+For more info go to https://hardhat.org/HH601 or run Hardhat with --show-stack-traces
+Errorm rerunning the program...
+Error HH601: Script scripts/dataAnalysis/storeDependacyGraphByBlockNumber.ts doesn't exist.
+For more info go to https://hardhat.org/HH601 or run Hardhat with --show-stack-traces
+Errorm rerunning the program...
+Error HH601: Script scripts/dataAnalysis/storeDependacyGraphByBlockNumber.ts doesn't exist.
+For more info go to https://hardhat.org/HH601 or run Hardhat with --show-stack-traces
+Errorm rerunning the program...
+Error HH601: Script scripts/dataAnalysis/storeDependacyGraphByBlockNumber.ts doesn't exist.
+For more info go to https://hardhat.org/HH601 or run Hardhat with --show-stack-traces
+Errorm rerunning the program...
+Error HH601: Script scripts/dataAnalysis/storeDependacyGraphByBlockNumber.ts doesn't exist.
+For more info go to https://hardhat.org/HH601 or run Hardhat with --show-stack-traces
+Errorm rerunning the program...
+^C
+
+ */
