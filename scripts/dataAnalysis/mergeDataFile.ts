@@ -15,9 +15,13 @@ function mergeObjects(...objects : any[]){
                 obj[key] = obj[key] ? obj[key] + object[key] : object[key];
             }else{
                 if(!obj[key]) obj[key] = {};
-                let childKeys = Object.keys(object[key]);
-                for(let childKey of childKeys){
-                    obj[key][childKey] = obj[key][childKey] ? obj[key][childKey] + object[key][childKey] : object[key][childKey];
+                // let childKeys = Object.keys(object[key]);
+                // for(let childKey of childKeys){
+                //     obj[key][childKey] = obj[key][childKey] ? obj[key][childKey] + object[key][childKey] : object[key][childKey];
+                // }
+                for(let tuple of object[key]){
+                    let [tupleKey, tupleVal] = tuple;
+                    obj[key][tupleKey] = obj[key][tupleKey] ? obj[key][tupleKey] + tupleVal : tupleVal;
                 }
             }
         }
