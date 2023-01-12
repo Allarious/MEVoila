@@ -1,5 +1,5 @@
 // import data from "../../censorshipData/censorshipData1";
-import data from "../../censorshipData/censorshipData02";
+import data from "../../censorshipData/censorshipData2";
 
 /**
  * @dev Processes censorship data for the final data outputs
@@ -14,6 +14,15 @@ function censorshipDataProcessing(){
 
     var censorshipByDistanceFb: any = Array.from({length: 4}, () => 0);
     var censorshipByDistance: any = Array.from({length: 4}, () => 0);
+
+    var maxCensorshipMap: any = {};
+    var isFlashbots: any = {};
+
+    var censorerMaxValFb: any = Array.from({length: 4}, () => 0);
+    var censorerMaxVal: any = Array.from({length: 4}, () => 0);
+
+    var goodBlocksFb: any = 0;
+    var goodBlocks: any = 0;
 
     var irrationalTransactions: number = 0;
     var irrationalTransactionsFb: number = 0;
@@ -55,7 +64,15 @@ function censorshipDataProcessing(){
     var landedInFb: any = 0;
     var landedInNormal: any = 0;
 
+    var minersFb: any = {};
     var miners: any = {};
+
+    var minersPointsFb: any = {};
+    var minersPoints: any = {};
+
+    var minersBlocksFb: any = {};
+    var minersBlocks: any = {};
+
     var minersFilter: any = {};
 
     for(let index = 0;
@@ -67,21 +84,21 @@ function censorshipDataProcessing(){
             let numOfTxs = block["numOfTxs"];
             let miner = block["miner"];
 
-            miners[miner] = miners[miner] ? miners[miner] + 1 : 1;
-            if(isFb){
-                /**
-                * Block gas check for fb/normal
-                */
-                addToDict(blockGasFb, block.gasUsed, 100000);
-                numberOfTransactionsFb += numOfTxs;
-                numberOfFailedTransactionsFb += block.transactions.length;
-                overAllGasUsedFb += block.gasUsed;
-            }else{
-                addToDict(blockGas, block.gasUsed, 100000);
-                numberOfTransactions += numOfTxs;
-                numberOfFailedTransactions += block.transactions.length;
-                overAllGasUsed += block.gasUsed;
-            }
+            isFlashbots[blockNumber] = isFb;
+            // if(isFb){
+            //     /**
+            //     * Block gas check for fb/normal
+            //     */
+            //     addToDict(blockGasFb, block.gasUsed, 100000);
+            //     numberOfTransactionsFb += numOfTxs;
+            //     numberOfFailedTransactionsFb += block.transactions.length;
+            //     overAllGasUsedFb += block.gasUsed;
+            // }else{
+            //     addToDict(blockGas, block.gasUsed, 100000);
+            //     numberOfTransactions += numOfTxs;
+            //     numberOfFailedTransactions += block.transactions.length;
+            //     overAllGasUsed += block.gasUsed;
+            // }
 
             if(numOfTxs === 0){
                 continue;
@@ -94,33 +111,37 @@ function censorshipDataProcessing(){
                 * Counting the transactions based on their index
                 */
                if(tx.runAtBlock === "0"){
-                    if(isFb){
-                        //irrational Fb
-                        irrationalTransactionsFb += 1
-                        gasPriceIrrationalFb += tx.gasUsed;
-                        addToDict(irrationalTxGasFb, tx.gasUsed, 1000);
-                        addToDict(irrationalTxIndexFb, tx.index * 300 / numOfTxs);
-                    }else{
-                        //irrational
-                        irrationalTransactions += 1;
-                        gasPriceIrrational += tx.gasUsed;
-                        addToDict(irrationalTxGas, tx.gasUsed, 1000);
-                        addToDict(irrationalTxIndex, tx.index * 300 / numOfTxs);
-                    }
+                    // if(isFb){
+                    //     //irrational Fb
+                    //     irrationalTransactionsFb += 1
+                    //     gasPriceIrrationalFb += tx.gasUsed;
+                    //     addToDict(irrationalTxGasFb, tx.gasUsed, 1000);
+                    //     addToDict(irrationalTxIndexFb, tx.index * 300 / numOfTxs);
+                    // }else{
+                    //     //irrational
+                    //     irrationalTransactions += 1;
+                    //     gasPriceIrrational += tx.gasUsed;
+                    //     addToDict(irrationalTxGas, tx.gasUsed, 1000);
+                    //     addToDict(irrationalTxIndex, tx.index * 300 / numOfTxs);
+                    // }
                }else{
                     let previousBlocks = blockNumber - parseInt(tx.runAtBlock);
                     let isCensored = false;
                     for(let p = 1; p <= previousBlocks; p++){
+                        // blocknumber = blockNumber - p
+                        // p index previousblocks - p
                         let runAtBlockData = data[index - p];
+
+                        // console.log("index ", blockNumber - p);
+                        // console.log("max ", previousBlocks - p);
+                        maxCensorshipMap[blockNumber - p] =  maxCensorshipMap[blockNumber - p] ? Math.max(maxCensorshipMap[blockNumber - p] , previousBlocks - p) : previousBlocks - p;
+
                         if(runAtBlockData){
                             if(runAtBlockData["blockNumber"] !== blockNumber - p){
                                 throw new Error(`blocks are not in order block ${runAtBlockData["blockNumber"]} is found instead of ${blockNumber - p}`);
                             }
                             let gasLeft = runAtBlockData.gasLimit - runAtBlockData.gasUsed;
                             if(gasLeft >= tx.gasLimit){
-
-                                let previousMiner = runAtBlockData["miner"];
-                                miners[previousMiner] = miners[previousMiner] ? miners[previousMiner] + 1 : 1;
 
                                 isCensored = true;
 
@@ -148,77 +169,136 @@ function censorshipDataProcessing(){
                         }
                     }
 
-                    if(isFb){
-                        //rational Fb
-                        rationalityPreviousFbBlocks[previousBlocks] += 1;
-                        numberOfRationalTransactionsFb += 1;
-                        gasPriceRationalFb += tx.gasUsed;
-                        addToDict(rationalTxGasFb, tx.gasUsed, 1000);
-                        addToDict(rationalTxIndexFb, tx.index * 300 / numOfTxs);
-                    }else{
-                        //rational
-                        rationalityPreviousBlocks[previousBlocks] += 1;
-                        numberOfRationalTransactions += 1;
-                        gasPriceRational += tx.gasUsed;
-                        addToDict(rationalTxGas, tx.gasUsed, 1000);
-                        addToDict(rationalTxIndex, tx.index * 300 / numOfTxs);
-                    }
+                    // if(isFb){
+                    //     //rational Fb
+                    //     rationalityPreviousFbBlocks[previousBlocks] += 1;
+                    //     numberOfRationalTransactionsFb += 1;
+                    //     gasPriceRationalFb += tx.gasUsed;
+                    //     addToDict(rationalTxGasFb, tx.gasUsed, 1000);
+                    //     addToDict(rationalTxIndexFb, tx.index * 300 / numOfTxs);
+                    // }else{
+                    //     //rational
+                    //     rationalityPreviousBlocks[previousBlocks] += 1;
+                    //     numberOfRationalTransactions += 1;
+                    //     gasPriceRational += tx.gasUsed;
+                    //     addToDict(rationalTxGas, tx.gasUsed, 1000);
+                    //     addToDict(rationalTxIndex, tx.index * 300 / numOfTxs);
+                    // }
                }
            }
     }
 
-    console.log("blockGas: ", blockGas, ",");
-    console.log("blockGasFb: ", blockGasFb, ",");
+    for(let index = 0;
+        index < data.length;
+        index++){
 
-    console.log("rationalityPreviousBlocks: ", rationalityPreviousBlocks, ",")
-    console.log("rationalityPreviousFbBlocks: ", rationalityPreviousFbBlocks, ",");
+            let block = data[index];
+            let blockNumber = block["blockNumber"];
+            let isFb = block["isFlashBotsBlock"];
+            let miner = block["miner"];
 
-    console.log("irrationalTransactions: ", irrationalTransactions, ",");
-    console.log("irrationalTransactionsFb: ", irrationalTransactionsFb, ",");
+            if(isFb){
+                minersBlocksFb[miner] = minersBlocksFb[miner] ? minersBlocksFb[miner] + 1 : 1;
+            }else{
+                minersBlocks[miner] = minersBlocks[miner] ? minersBlocks[miner] + 1 : 1;
+            }
 
-    console.log("rationalTxGas: ", rationalTxGas, ",");
-    console.log("irrationalTxGas: ", irrationalTxGas, ",");
-    console.log("rationalTxGasFb: ", rationalTxGasFb, ",")
-    console.log("irrationalTxGasFb: ", irrationalTxGasFb, ",")
+            if(maxCensorshipMap[blockNumber] === undefined){
+                if(isFb){
+                    goodBlocksFb++;
+                }else{
+                    goodBlocks++;
+                }
+            }else{
+                let blockCensorshipPoint = maxCensorshipMap[blockNumber] ? maxCensorshipMap[blockNumber] : 0;
+                if(isFb){
+                    censorerMaxValFb[maxCensorshipMap[blockNumber]] += 1;
+                    minersFb[miner] = minersFb[miner] ? minersFb[miner] + 1 : 1;
+                    minersPointsFb[miner] = minersPointsFb[miner] ? minersPointsFb[miner] +  blockCensorshipPoint : blockCensorshipPoint;
+                }else{
+                    censorerMaxVal[maxCensorshipMap[blockNumber]] += 1;
+                    miners[miner] = miners[miner] ? miners[miner] + 1 : 1;
+                    minersPoints[miner] = minersPoints[miner] ? minersPoints[miner] + blockCensorshipPoint : blockCensorshipPoint;
+                }
+            }
+    }
 
-    console.log("rationalTxIndex: ", rationalTxIndex, ",");
-    console.log("irrationalTxIndex: ", irrationalTxIndex, ",");
-    console.log("rationalTxIndexFb: ", rationalTxIndexFb, ",");
-    console.log("irrationalTxIndexFb: ", irrationalTxIndexFb, ",");
+    // console.log("blockGas: ", blockGas, ",");
+    // console.log("blockGasFb: ", blockGasFb, ",");
 
-    console.log("censorship: ", censorship, ",");
-    console.log("censorshipFb: ", censorshipFb, ",");
+    // console.log("rationalityPreviousBlocks: ", rationalityPreviousBlocks, ",")
+    // console.log("rationalityPreviousFbBlocks: ", rationalityPreviousFbBlocks, ",");
 
-    console.log("censorshipAmount: ", censorshipAmount, ",");
-    console.log("censorshipAmountFb: ", censorshipAmountFb, ",");
+    // console.log("irrationalTransactions: ", irrationalTransactions, ",");
+    // console.log("irrationalTransactionsFb: ", irrationalTransactionsFb, ",");
 
-    console.log("numberOfTransactions: ", numberOfTransactions, ",")
-    console.log("numberOfTransactionsFb: ", numberOfTransactionsFb, ",");
+    // console.log("rationalTxGas: ", rationalTxGas, ",");
+    // console.log("irrationalTxGas: ", irrationalTxGas, ",");
+    // console.log("rationalTxGasFb: ", rationalTxGasFb, ",")
+    // console.log("irrationalTxGasFb: ", irrationalTxGasFb, ",")
 
-    console.log("numberOfFailedTransactions: ", numberOfFailedTransactions, ",");
-    console.log("numberOfFailedTransactionsFb: ", numberOfFailedTransactionsFb, ",");
+    // console.log("rationalTxIndex: ", rationalTxIndex, ",");
+    // console.log("irrationalTxIndex: ", irrationalTxIndex, ",");
+    // console.log("rationalTxIndexFb: ", rationalTxIndexFb, ",");
+    // console.log("irrationalTxIndexFb: ", irrationalTxIndexFb, ",");
 
-    console.log("numberOfRationalTransactions: ", numberOfRationalTransactions, ",");
-    console.log("numberOfRationalTransactionsFb: ", numberOfRationalTransactionsFb, ",");
+    // console.log("censorship: ", censorship, ",");
+    // console.log("censorshipFb: ", censorshipFb, ",");
 
-    console.log("overAllGasUsed: ", overAllGasUsed, ",");
-    console.log("overAllGasUsedFb: ", overAllGasUsedFb, ",");
+    // console.log("censorshipAmount: ", censorshipAmount, ",");
+    // console.log("censorshipAmountFb: ", censorshipAmountFb, ",");
 
-    console.log("gasPriceRational: ", gasPriceRational, ",");
-    console.log("gasPriceRationalFb: ", gasPriceRationalFb, ",");
+    // console.log("numberOfTransactions: ", numberOfTransactions, ",")
+    // console.log("numberOfTransactionsFb: ", numberOfTransactionsFb, ",");
+
+    // console.log("numberOfFailedTransactions: ", numberOfFailedTransactions, ",");
+    // console.log("numberOfFailedTransactionsFb: ", numberOfFailedTransactionsFb, ",");
+
+    // console.log("numberOfRationalTransactions: ", numberOfRationalTransactions, ",");
+    // console.log("numberOfRationalTransactionsFb: ", numberOfRationalTransactionsFb, ",");
+
+    // console.log("overAllGasUsed: ", overAllGasUsed, ",");
+    // console.log("overAllGasUsedFb: ", overAllGasUsedFb, ",");
+
+    // console.log("gasPriceRational: ", gasPriceRational, ",");
+    // console.log("gasPriceRationalFb: ", gasPriceRationalFb, ",");
     
-    console.log("gasPriceIrrational: ", gasPriceIrrational, ",");
-    console.log("gasPriceIrrationalFb: ", gasPriceIrrationalFb, ",");
+    // console.log("gasPriceIrrational: ", gasPriceIrrational, ",");
+    // console.log("gasPriceIrrationalFb: ", gasPriceIrrationalFb, ",");
 
-    console.log("censorshipByDistanceFb:", censorshipByDistanceFb, ",");
-    console.log("censorshipByDistance", censorshipByDistance, ",");
+    // console.log("censorshipByDistanceFb:", censorshipByDistanceFb, ",");
+    // console.log("censorshipByDistance", censorshipByDistance, ",");
 
-    console.log("landedInFb", landedInFb, ",");
-    console.log("landedInNormal", landedInNormal, ",");
+    // console.log("landedInFb", landedInFb, ",");
+    // console.log("landedInNormal", landedInNormal, ",");
+
+    console.log("censorerMaxFb:", censorerMaxValFb, ",");
+    console.log("censorerMax:", censorerMaxVal, ",");
+
+    console.log("goodBlocksFb:", goodBlocksFb, ",");
+    console.log("goodBlocks:", goodBlocks, ",");
+
+    // console.log("minersFb:", sortMapBasedOnKey(minersFb), ",");
+    // console.log("miners:", sortMapBasedOnKey(miners), ",");
+
+    // console.log("minersPointsFb:", sortMapBasedOnKey(minersPointsFb), ",");
+    // console.log("minersPoints:", sortMapBasedOnKey(minersPointsFb), ",");
+
+    // console.log("minersBlocksFb:", sortMapBasedOnKey(minersBlocksFb), ",");
+    // console.log("minersBlocks:", sortMapBasedOnKey(minersBlocks), ",");
 
     function addToDict(dict: any,  val: number, factor: number = 1){
         let index = Math.floor(val / factor);
         dict[index] = dict[index] ? dict[index] + 1 : 1;
+    }
+
+    function sortMapBasedOnKey(obj: any) : any{
+        let arr = [];
+        let sortedKeyArr = Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
+        for(let key of sortedKeyArr){
+            arr.push([key, obj[key]]);
+        }
+        return arr;
     }
 }
 
