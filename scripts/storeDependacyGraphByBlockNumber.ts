@@ -4,22 +4,28 @@ import { forkFrom } from "./forkFrom";
 import { getBlockTransactions } from "./getBlockTransactions";
 import fs from 'fs';
 
-export const FindDependancyGraphInBlockchain = async () => {
+export const FindDependancyGraphInBlockchain = async function (interval : number[]) {
     let previousBlockNumber = 0;
 
-    while(true){
+    var [startBlock, endBlock] = interval;
+    await forkFrom(0);
+    // while(true){
+    for(let blockNumber = startBlock;
+        blockNumber < endBlock;
+        blockNumber++){
+
         let start = Date.now()
-        await forkFrom(0);
+        // await forkFrom(0);
 
-        const currentBlockNumber: number = await ethers.provider.getBlockNumber();
-        const blockNumber: number = currentBlockNumber - 50;
+        // const currentBlockNumber: number = await ethers.provider.getBlockNumber();
+        // const blockNumber: number = currentBlockNumber - 50;
 
-        if(blockNumber === previousBlockNumber){
-            await delay(5000);
-            continue;
-        }
+        // if(blockNumber === previousBlockNumber){
+        //     await delay(5000);
+        //     continue;
+        // }
 
-        previousBlockNumber = blockNumber;
+        // previousBlockNumber = blockNumber;
 
         const txHashes = await getBlockTransactions(blockNumber);
         const numOfTransactions = txHashes?.length;
@@ -63,7 +69,7 @@ function delay(ms: number) {
 }
 
 
-FindDependancyGraphInBlockchain();
+FindDependancyGraphInBlockchain([15000000, 15500000]);
 //We should try going back a couple blocks too, since a block can be mined by a certain miner that filters transactions
 
 // '0x65b2052951db15f3354075abefab1ccd00570c88441c2fcdda557d2ef741faa0' => 0,
