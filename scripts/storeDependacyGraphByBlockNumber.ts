@@ -8,13 +8,13 @@ export const FindDependancyGraphInBlockchain = async function (interval : number
     let previousBlockNumber = 0;
 
     var [startBlock, endBlock] = interval;
-    await forkFrom(0);
     // while(true){
     for(let blockNumber = startBlock;
         blockNumber < endBlock;
         blockNumber++){
 
         let start = Date.now()
+        await forkFrom(0);
         // await forkFrom(0);
 
         // const currentBlockNumber: number = await ethers.provider.getBlockNumber();
