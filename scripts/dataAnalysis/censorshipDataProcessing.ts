@@ -1,5 +1,5 @@
 // import data from "../../censorshipData/censorshipData1";
-import data from "../../censorshipData/censorshipData2";
+import data from "../../censorshipData/censorshipData02";
 
 /**
  * @dev Processes censorship data for the final data outputs
@@ -75,6 +75,12 @@ function censorshipDataProcessing(){
 
     var minersFilter: any = {};
 
+    var suspBlocks = 0;
+    var suspBlocksFb = 0;
+    var suspBlocksMap: any = {};
+
+    var flashbotsBundleTxNum = 0;
+
     for(let index = 0;
         index < data.length;
         index++){
@@ -104,6 +110,10 @@ function censorshipDataProcessing(){
                 continue;
             }
 
+            if(isFb){
+                flashbotsBundleTxNum += Object.keys(block["flashBotsTransactions"]).length;
+            }
+
            for(let tx of block.transactions){
                 /**
                 * Counting the rational transactions based on how many blocks back they run
@@ -131,10 +141,20 @@ function censorshipDataProcessing(){
                         // blocknumber = blockNumber - p
                         // p index previousblocks - p
                         let runAtBlockData = data[index - p];
+                        if(!runAtBlockData) continue;
 
                         // console.log("index ", blockNumber - p);
                         // console.log("max ", previousBlocks - p);
                         maxCensorshipMap[blockNumber - p] =  maxCensorshipMap[blockNumber - p] ? Math.max(maxCensorshipMap[blockNumber - p] , previousBlocks - p) : previousBlocks - p;
+
+                        if(suspBlocksMap[blockNumber - p] === undefined){
+                            suspBlocksMap[blockNumber - p] = true;
+                            if(runAtBlockData["isFlashBotsBlock"]){
+                                suspBlocksFb++;
+                            }else{
+                                suspBlocks++;
+                            }
+                        }
 
                         if(runAtBlockData){
                             if(runAtBlockData["blockNumber"] !== blockNumber - p){
@@ -272,11 +292,11 @@ function censorshipDataProcessing(){
     // console.log("landedInFb", landedInFb, ",");
     // console.log("landedInNormal", landedInNormal, ",");
 
-    console.log("censorerMaxFb:", censorerMaxValFb, ",");
-    console.log("censorerMax:", censorerMaxVal, ",");
+    // console.log("censorerMaxFb:", censorerMaxValFb, ",");
+    // console.log("censorerMax:", censorerMaxVal, ",");
 
-    console.log("goodBlocksFb:", goodBlocksFb, ",");
-    console.log("goodBlocks:", goodBlocks, ",");
+    // console.log("goodBlocksFb:", goodBlocksFb, ",");
+    // console.log("goodBlocks:", goodBlocks, ",");
 
     // console.log("minersFb:", sortMapBasedOnKey(minersFb), ",");
     // console.log("miners:", sortMapBasedOnKey(miners), ",");
@@ -286,6 +306,10 @@ function censorshipDataProcessing(){
 
     // console.log("minersBlocksFb:", sortMapBasedOnKey(minersBlocksFb), ",");
     // console.log("minersBlocks:", sortMapBasedOnKey(minersBlocks), ",");
+
+    console.log("suspBlocks:", suspBlocks, ",");
+    console.log("suspBlocksFb:", suspBlocksFb, ",");
+    console.log("flashbotsBundleTxNum:", flashbotsBundleTxNum, ",");
 
     function addToDict(dict: any,  val: number, factor: number = 1){
         let index = Math.floor(val / factor);
