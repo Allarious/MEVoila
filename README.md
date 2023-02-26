@@ -1,6 +1,6 @@
 # MEVoila
 
-MEVoila is a pattern extractor that is designed to crawl ethereum blocks and identify malicious patterns related to censorship and PGAs using only on-chain data.
+MEVoila is a malicious pattern extractor designed to crawl ethereum blocks and identify malicious patterns related to censorship and PGAs using only on-chain data.
 
 ## How it works
 
