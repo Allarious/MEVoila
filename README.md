@@ -14,5 +14,5 @@ We categorize the reason of rational transactions failing in several categories:
 * It was a part of a PGA and lost.
 * It was front-ran by another transaction.
 * It was censored by block builders and included after the opportunity was captured.
-* It was actually sent late to the network by the sender
+* It was actually sent late to the network by the sender.
 
